@@ -125,7 +125,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Nom d'utilisateur (temporaire) :</string>
+     <string>Nom d'utilisateur :</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -143,10 +143,10 @@
      </font>
     </property>
     <property name="text">
-     <string>Mot de passe (temporaire) :</string>
+     <string>Mot de passe :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="lineEdit_nom">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -167,7 +167,7 @@
      <string>Dupont</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="lineEdit_prenom">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -188,7 +188,7 @@
      <string>Jean</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="lineEdit_adresse">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -209,7 +209,7 @@
      <string>7 Rue des Pacotilles</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
+   <widget class="QLineEdit" name="lineEdit_username">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -230,7 +230,7 @@
      <string>jean_dupont</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_7">
+   <widget class="QLineEdit" name="lineEdit_password">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -251,7 +251,7 @@
      <string>livreur1234</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_ajouter">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -264,7 +264,7 @@
      <string>Ajouter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_annuler">
     <property name="geometry">
      <rect>
       <x>400</x>
