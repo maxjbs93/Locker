@@ -11,8 +11,10 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -22,6 +24,8 @@ class Ui_supprimercommande
 {
 public:
     QWidget *centralwidget;
+    QLineEdit *lineEdit_commandeId;
+    QPushButton *pushButton_supprimer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -32,6 +36,12 @@ public:
         supprimercommande->resize(800, 600);
         centralwidget = new QWidget(supprimercommande);
         centralwidget->setObjectName("centralwidget");
+        lineEdit_commandeId = new QLineEdit(centralwidget);
+        lineEdit_commandeId->setObjectName("lineEdit_commandeId");
+        lineEdit_commandeId->setGeometry(QRect(250, 200, 241, 31));
+        pushButton_supprimer = new QPushButton(centralwidget);
+        pushButton_supprimer->setObjectName("pushButton_supprimer");
+        pushButton_supprimer->setGeometry(QRect(300, 280, 141, 41));
         supprimercommande->setCentralWidget(centralwidget);
         menubar = new QMenuBar(supprimercommande);
         menubar->setObjectName("menubar");
@@ -49,6 +59,7 @@ public:
     void retranslateUi(QMainWindow *supprimercommande)
     {
         supprimercommande->setWindowTitle(QCoreApplication::translate("supprimercommande", "MainWindow", nullptr));
+        pushButton_supprimer->setText(QCoreApplication::translate("supprimercommande", "Supprimer", nullptr));
     } // retranslateUi
 
 };

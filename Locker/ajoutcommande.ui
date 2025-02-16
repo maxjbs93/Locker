@@ -148,7 +148,7 @@
      <string>Adresse du commerçant :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_mail">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -166,7 +166,7 @@
      <string>ishakabdoul@gmail.com</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="lineEdit_poids">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -181,7 +181,7 @@
      </font>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="lineEdit_nom">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -196,7 +196,7 @@
      </font>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="lineEdit_adresse">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -211,7 +211,7 @@
      </font>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboBox_taille">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -229,31 +229,37 @@
      </font>
     </property>
     <property name="currentText">
-     <string>Choisissez une option...</string>
+     <string/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>-1</number>
     </property>
-    <item>
-     <property name="text">
-      <string notr="true">Choisissez une option...</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Petit casier</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Moyen casier</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Grand casier</string>
-     </property>
-    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton_ajouter">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>480</y>
+      <width>181</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ajouter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_annuler">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>480</y>
+      <width>181</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Annuler</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

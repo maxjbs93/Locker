@@ -27,10 +27,9 @@ void MainPage::on_pushButton_new_commande_clicked()
     newPage->show();
 }
 
-
-void MainPage::on_pushButton_supp_commande_clicked()
+void MainPage::on_pushButton_afficher_commande_clicked()
 {
-    supprimercommande *newPage = new supprimercommande(this);
+    affichercommande *newPage = new affichercommande(this);
     newPage->show();
 }
 
@@ -47,4 +46,6 @@ void MainPage::on_pushButton_certifier_reception_clicked()
     certifierreceptioncolis *newPage = new certifierreceptioncolis(this);
     newPage->show();
 }
+
+
 

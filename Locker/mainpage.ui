@@ -30,7 +30,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>10</y>
+       <y>0</y>
        <width>271</width>
        <height>71</height>
       </rect>
@@ -57,7 +57,7 @@
        <x>120</x>
        <y>80</y>
        <width>361</width>
-       <height>71</height>
+       <height>51</height>
       </rect>
      </property>
      <property name="font">
@@ -112,24 +112,6 @@
       <string>Saisir une nouvelle commande </string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_supp_commande">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>280</y>
-       <width>361</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Supprimer une commande existante</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_afficher_etat_casier">
      <property name="geometry">
       <rect>
@@ -164,6 +146,24 @@
      </property>
      <property name="text">
       <string>Certifier la réception d'un colis par un livreur</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_afficher_commande">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>280</y>
+       <width>361</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Afficher les commandes existantes</string>
      </property>
     </widget>
    </widget>

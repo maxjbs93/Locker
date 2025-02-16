@@ -1,3 +1,4 @@
+debug/affichercommande.o
 debug/afficheretatcasier.o
 debug/ajoutcommande.o
 debug/ajoutlivreur.o
@@ -5,11 +6,10 @@ debug/certifierreceptioncolis.o
 debug/main.o
 debug/mainpage.o
 debug/mainwindow.o
-debug/supprimercommande.o
+debug/moc_affichercommande.o
 debug/moc_afficheretatcasier.o
 debug/moc_ajoutcommande.o
 debug/moc_ajoutlivreur.o
 debug/moc_certifierreceptioncolis.o
 debug/moc_mainpage.o
 debug/moc_mainwindow.o
-debug/moc_supprimercommande.o

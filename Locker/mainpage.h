@@ -4,9 +4,9 @@
 #include <QMainWindow>
 #include "ajoutlivreur.h"
 #include "ajoutcommande.h"
-#include "supprimercommande.h"
 #include "afficheretatcasier.h"
 #include "certifierreceptioncolis.h"
+#include "affichercommande.h"
 namespace Ui {
 class MainPage;
 }
@@ -29,6 +29,8 @@ private slots:
     void on_pushButton_afficher_etat_casier_clicked();
 
     void on_pushButton_certifier_reception_clicked();
+
+    void on_pushButton_afficher_commande_clicked();
 
 private:
     Ui::MainPage *ui;

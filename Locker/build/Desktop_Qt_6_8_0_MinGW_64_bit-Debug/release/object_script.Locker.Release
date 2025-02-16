@@ -1,3 +1,4 @@
+release/affichercommande.o
 release/afficheretatcasier.o
 release/ajoutcommande.o
 release/ajoutlivreur.o
@@ -5,11 +6,10 @@ release/certifierreceptioncolis.o
 release/main.o
 release/mainpage.o
 release/mainwindow.o
-release/supprimercommande.o
+release/moc_affichercommande.o
 release/moc_afficheretatcasier.o
 release/moc_ajoutcommande.o
 release/moc_ajoutlivreur.o
 release/moc_certifierreceptioncolis.o
 release/moc_mainpage.o
 release/moc_mainwindow.o
-release/moc_supprimercommande.o
