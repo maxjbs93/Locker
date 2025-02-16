@@ -61,5 +61,96 @@ def ajouter_livreur():
 
     return jsonify({"status": "success", "message": "Livreur ajouté avec succès !"})
 
+@app.route('/ajouter_commande', methods=['POST'])
+def ajouter_commande():
+    data = request.json
+    print("Données reçues:", data)  # Log des données reçues
+
+    # Vérifier si tous les champs nécessaires sont fournis
+    required_fields = ["client_email", "taille_casier", "poids_colis", "commercant_nom", "commercant_adresse"]
+    for field in required_fields:
+        if field not in data or not data[field]:
+            return jsonify({"status": "error", "message": f"Champ manquant : {field}"}), 400
+
+    email_client = data["client_email"]
+    taille_casier = data["taille_casier"]
+    poids_colis = data["poids_colis"]
+    nom_commercant = data["commercant_nom"]
+    adresse_commercant = data["commercant_adresse"]
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Insérer la commande dans la BD
+        sql = """
+        INSERT INTO commandes (client_email, taille_casier, poids_colis, commercant_nom, commercant_adresse)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(sql, (email_client, taille_casier, poids_colis, nom_commercant, adresse_commercant))
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Commande ajoutée avec succès !"})
+
+    except Exception as e:
+        print(f"Erreur: {e}")  # Log de l'erreur
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/afficher_commandes', methods=['GET'])
+def afficher_commandes():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Récupérer toutes les commandes non récupérées
+        cursor.execute("SELECT id, client_email, taille_casier, poids_colis, commercant_nom, commercant_adresse, date_creation FROM commandes")
+        commandes = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"status": "success", "commandes": commandes})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/supprimer_commande', methods=['DELETE'])
+def supprimer_commande():
+    data = request.json  # Récupérer les données envoyées (JSON)
+    commande_id = data.get("commande_id")  # Récupérer l'ID de la commande
+
+    if not commande_id:
+        return jsonify({"status": "error", "message": "ID de commande manquant"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Vérifier si la commande existe
+        cursor.execute("SELECT * FROM commandes WHERE id = %s", (commande_id,))
+        commande = cursor.fetchone()
+        if not commande:
+            return jsonify({"status": "error", "message": "Commande introuvable"}), 404
+
+        # Supprimer la commande
+        cursor.execute("DELETE FROM commandes WHERE id = %s", (commande_id,))
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Commande supprimée avec succès !"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
