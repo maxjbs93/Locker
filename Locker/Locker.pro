@@ -14,7 +14,7 @@ SOURCES += \
     afficheretatcasier.cpp \
     ajoutcommande.cpp \
     ajoutlivreur.cpp \
-    certifierreceptioncolis.cpp \
+    attribuercommandelivreur.cpp \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp
@@ -24,7 +24,7 @@ HEADERS += \
     afficheretatcasier.h \
     ajoutcommande.h \
     ajoutlivreur.h \
-    certifierreceptioncolis.h \
+    attribuercommandelivreur.h \
     mainpage.h \
     mainwindow.h
 
@@ -33,7 +33,7 @@ FORMS += \
     afficheretatcasier.ui \
     ajoutcommande.ui \
     ajoutlivreur.ui \
-    certifierreceptioncolis.ui \
+    attribuercommandelivreur.ui \
     mainpage.ui \
     mainwindow.ui
 

@@ -106,8 +106,13 @@ def afficher_commandes():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Récupérer toutes les commandes non récupérées
-        cursor.execute("SELECT id, client_email, taille_casier, poids_colis, commercant_nom, commercant_adresse, date_creation FROM commandes")
+        # Modifier la requête SQL pour inclure "statut"
+        cursor.execute("""
+            SELECT id, client_email, taille_casier, poids_colis, commercant_nom, 
+                   commercant_adresse, date_creation, statut 
+            FROM commandes
+        """)
+        
         commandes = cursor.fetchall()
 
         cursor.close()
@@ -116,6 +121,7 @@ def afficher_commandes():
         return jsonify({"status": "success", "commandes": commandes})
 
     except Exception as e:
+        print("Erreur serveur:", str(e))  # Affiche l'erreur dans la console Flask
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
@@ -150,6 +156,42 @@ def supprimer_commande():
         cursor.close()
         conn.close()
 
+@app.route('/afficher_etat_casiers', methods=['GET'])
+def afficher_etat_casiers():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Récupérer l'état de chaque casier
+        cursor.execute("SELECT id_casier, taille, poids_max, etat, code, id_commande, date_occupation FROM casiers")
+        casiers = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"status": "success", "casiers": casiers})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/afficher_livreurs', methods=['GET'])
+def afficher_livreurs():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Récupérer les informations des livreurs depuis la table 'livreurs'
+        cursor.execute("SELECT nom, prenom, adresse, username, password, statut FROM livreurs")
+        livreurs = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"status": "success", "livreurs": livreurs})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 
 if __name__ == '__main__':

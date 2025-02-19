@@ -109,7 +109,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Poids du colis :</string>
+     <string>Poids du colis (kg) :</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">

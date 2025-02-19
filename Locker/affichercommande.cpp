@@ -11,7 +11,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-
 affichercommande::affichercommande(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::affichercommande)
@@ -52,20 +51,26 @@ void affichercommande::chargerCommandes()
                 QJsonArray commandes = responseObject["commandes"].toArray();
                 qDebug() << "Commandes reçues:" << commandes;
 
+                // Mise à jour du nombre de colonnes pour inclure le statut
                 ui->tableWidget_commandes->setRowCount(commandes.size());
-                ui->tableWidget_commandes->setColumnCount(7);  // Définir le nombre de colonnes
-                ui->tableWidget_commandes->setHorizontalHeaderLabels({"ID", "Email Client", "Taille Casier", "Poids Colis", "Nom Commerçant", "Adresse Commerçant", "Date Création"});
-                ui->tableWidget_commandes->setColumnWidth(0, 50);  // ID
+                ui->tableWidget_commandes->setColumnCount(8);  // Ajout de la colonne statut
+                ui->tableWidget_commandes->setHorizontalHeaderLabels(
+                    {"ID", "Email Client", "Taille Casier", "Poids Colis",
+                     "Nom Commerçant", "Adresse Commerçant", "Date Création", "Statut"}
+                    );
+
+                // Ajustement de la taille des colonnes
+                ui->tableWidget_commandes->setColumnWidth(0, 50);   // ID
                 ui->tableWidget_commandes->setColumnWidth(1, 150);  // Email Client
-                ui->tableWidget_commandes->setColumnWidth(2, 75);  // Taille Casier
-                ui->tableWidget_commandes->setColumnWidth(3, 75);  // Poids Colis
+                ui->tableWidget_commandes->setColumnWidth(2, 75);   // Taille Casier
+                ui->tableWidget_commandes->setColumnWidth(3, 75);   // Poids Colis
                 ui->tableWidget_commandes->setColumnWidth(4, 150);  // Nom Commerçant
                 ui->tableWidget_commandes->setColumnWidth(5, 150);  // Adresse Commerçant
-                ui->tableWidget_commandes->setColumnWidth(6, 125);   // Date Création
-                ui->tableWidget_commandes->horizontalHeader()->setStretchLastSection(true);  // Étendre la dernière colonne pour remplir l'espace
+                ui->tableWidget_commandes->setColumnWidth(6, 125);  // Date Création
+                ui->tableWidget_commandes->setColumnWidth(7, 100);  // Statut
+                ui->tableWidget_commandes->horizontalHeader()->setStretchLastSection(true);
 
-
-
+                // Ajout des commandes au tableau
                 for (int i = 0; i < commandes.size(); ++i) {
                     QJsonObject commande = commandes[i].toObject();
                     ui->tableWidget_commandes->setItem(i, 0, new QTableWidgetItem(QString::number(commande["id"].toInt())));
@@ -75,6 +80,7 @@ void affichercommande::chargerCommandes()
                     ui->tableWidget_commandes->setItem(i, 4, new QTableWidgetItem(commande["commercant_nom"].toString()));
                     ui->tableWidget_commandes->setItem(i, 5, new QTableWidgetItem(commande["commercant_adresse"].toString()));
                     ui->tableWidget_commandes->setItem(i, 6, new QTableWidgetItem(commande["date_creation"].toString()));
+                    ui->tableWidget_commandes->setItem(i, 7, new QTableWidgetItem(commande["statut"].toString()));
                 }
             } else {
                 QMessageBox::warning(this, "Erreur", responseObject["message"].toString());
@@ -86,12 +92,9 @@ void affichercommande::chargerCommandes()
     });
 }
 
-
-
-// Fonction pour supprimer la commande
+// Fonction pour supprimer une commande
 void affichercommande::supprimerCommande()
 {
-    // Vérifier que l'ID est valide (sélectionné dans le QTableWidget)
     int row = ui->tableWidget_commandes->currentRow();
     if (row == -1) {
         QMessageBox::warning(this, "Erreur", "Veuillez sélectionner une commande à supprimer.");
@@ -99,27 +102,18 @@ void affichercommande::supprimerCommande()
     }
 
     int commandeId = ui->tableWidget_commandes->item(row, 0)->text().toInt();
-
-    // URL de l'API pour supprimer la commande
     QString url = "http://127.0.0.1:5000/supprimer_commande";
-
-    // Création du JSON
     QJsonObject json;
     json["commande_id"] = commandeId;
 
-    // Préparation de la requête HTTP
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkRequest request((QUrl(url)));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    // Conversion du JSON en QByteArray
     QJsonDocument doc(json);
     QByteArray data = doc.toJson();
 
-    // Envoyer la requête DELETE
     QNetworkReply *reply = manager->sendCustomRequest(request, "DELETE", data);
 
-    // Gérer la réponse
     connect(reply, &QNetworkReply::finished, [reply, this]() {
         if (reply->error() == QNetworkReply::NoError) {
             QByteArray response_data = reply->readAll();
@@ -128,7 +122,7 @@ void affichercommande::supprimerCommande()
 
             if (responseObject["status"].toString() == "success") {
                 QMessageBox::information(this, "Succès", responseObject["message"].toString());
-                chargerCommandes();  // Recharger les commandes après suppression
+                chargerCommandes();
             } else {
                 QMessageBox::warning(this, "Erreur", responseObject["message"].toString());
             }

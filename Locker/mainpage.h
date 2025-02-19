@@ -5,7 +5,7 @@
 #include "ajoutlivreur.h"
 #include "ajoutcommande.h"
 #include "afficheretatcasier.h"
-#include "certifierreceptioncolis.h"
+#include "attribuercommandelivreur.h"
 #include "affichercommande.h"
 namespace Ui {
 class MainPage;
@@ -28,9 +28,9 @@ private slots:
 
     void on_pushButton_afficher_etat_casier_clicked();
 
-    void on_pushButton_certifier_reception_clicked();
-
     void on_pushButton_afficher_commande_clicked();
+
+    void on_pushButton_attribuer_commande_livreur_clicked();
 
 private:
     Ui::MainPage *ui;

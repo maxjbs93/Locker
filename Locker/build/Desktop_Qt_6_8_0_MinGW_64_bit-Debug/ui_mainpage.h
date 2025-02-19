@@ -29,7 +29,7 @@ public:
     QPushButton *pushButton_ajout_livreur;
     QPushButton *pushButton_new_commande;
     QPushButton *pushButton_afficher_etat_casier;
-    QPushButton *pushButton_certifier_reception;
+    QPushButton *pushButton_attribuer_commande_livreur;
     QPushButton *pushButton_afficher_commande;
 
     void setupUi(QMainWindow *MainPage)
@@ -74,10 +74,10 @@ public:
         pushButton_afficher_etat_casier->setObjectName("pushButton_afficher_etat_casier");
         pushButton_afficher_etat_casier->setGeometry(QRect(120, 340, 361, 41));
         pushButton_afficher_etat_casier->setFont(font2);
-        pushButton_certifier_reception = new QPushButton(groupBox);
-        pushButton_certifier_reception->setObjectName("pushButton_certifier_reception");
-        pushButton_certifier_reception->setGeometry(QRect(120, 400, 361, 41));
-        pushButton_certifier_reception->setFont(font2);
+        pushButton_attribuer_commande_livreur = new QPushButton(groupBox);
+        pushButton_attribuer_commande_livreur->setObjectName("pushButton_attribuer_commande_livreur");
+        pushButton_attribuer_commande_livreur->setGeometry(QRect(120, 400, 361, 41));
+        pushButton_attribuer_commande_livreur->setFont(font2);
         pushButton_afficher_commande = new QPushButton(groupBox);
         pushButton_afficher_commande->setObjectName("pushButton_afficher_commande");
         pushButton_afficher_commande->setGeometry(QRect(120, 280, 361, 41));
@@ -98,7 +98,7 @@ public:
         pushButton_ajout_livreur->setText(QCoreApplication::translate("MainPage", "Ajouter un nouveau livreur", nullptr));
         pushButton_new_commande->setText(QCoreApplication::translate("MainPage", "Saisir une nouvelle commande ", nullptr));
         pushButton_afficher_etat_casier->setText(QCoreApplication::translate("MainPage", "Afficher l'\303\251tat des casiers", nullptr));
-        pushButton_certifier_reception->setText(QCoreApplication::translate("MainPage", "Certifier la r\303\251ception d'un colis par un livreur", nullptr));
+        pushButton_attribuer_commande_livreur->setText(QCoreApplication::translate("MainPage", "Attribuer une commande \303\240 un livreur", nullptr));
         pushButton_afficher_commande->setText(QCoreApplication::translate("MainPage", "Afficher les commandes existantes", nullptr));
     } // retranslateUi
 

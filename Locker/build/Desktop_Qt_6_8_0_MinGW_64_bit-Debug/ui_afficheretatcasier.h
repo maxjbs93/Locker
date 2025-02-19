@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +24,7 @@ class Ui_afficheretatcasier
 {
 public:
     QWidget *centralwidget;
+    QTableWidget *tableWidget;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -29,13 +32,16 @@ public:
     {
         if (afficheretatcasier->objectName().isEmpty())
             afficheretatcasier->setObjectName("afficheretatcasier");
-        afficheretatcasier->resize(800, 600);
+        afficheretatcasier->resize(1000, 600);
         centralwidget = new QWidget(afficheretatcasier);
         centralwidget->setObjectName("centralwidget");
+        tableWidget = new QTableWidget(centralwidget);
+        tableWidget->setObjectName("tableWidget");
+        tableWidget->setGeometry(QRect(0, 150, 1000, 300));
         afficheretatcasier->setCentralWidget(centralwidget);
         menubar = new QMenuBar(afficheretatcasier);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 1000, 22));
         afficheretatcasier->setMenuBar(menubar);
         statusbar = new QStatusBar(afficheretatcasier);
         statusbar->setObjectName("statusbar");

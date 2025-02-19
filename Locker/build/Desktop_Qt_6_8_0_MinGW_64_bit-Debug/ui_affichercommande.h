@@ -34,19 +34,19 @@ public:
     {
         if (affichercommande->objectName().isEmpty())
             affichercommande->setObjectName("affichercommande");
-        affichercommande->resize(800, 600);
+        affichercommande->resize(1000, 600);
         centralwidget = new QWidget(affichercommande);
         centralwidget->setObjectName("centralwidget");
         pushButton_supprimer = new QPushButton(centralwidget);
         pushButton_supprimer->setObjectName("pushButton_supprimer");
-        pushButton_supprimer->setGeometry(QRect(360, 400, 75, 24));
+        pushButton_supprimer->setGeometry(QRect(460, 400, 75, 24));
         tableWidget_commandes = new QTableWidget(centralwidget);
         tableWidget_commandes->setObjectName("tableWidget_commandes");
-        tableWidget_commandes->setGeometry(QRect(0, 180, 800, 200));
+        tableWidget_commandes->setGeometry(QRect(0, 180, 1001, 200));
         affichercommande->setCentralWidget(centralwidget);
         menubar = new QMenuBar(affichercommande);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 1000, 22));
         affichercommande->setMenuBar(menubar);
         statusbar = new QStatusBar(affichercommande);
         statusbar->setObjectName("statusbar");

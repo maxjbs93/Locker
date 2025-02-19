@@ -41,11 +41,9 @@ void MainPage::on_pushButton_afficher_etat_casier_clicked()
 }
 
 
-void MainPage::on_pushButton_certifier_reception_clicked()
+void MainPage::on_pushButton_attribuer_commande_livreur_clicked()
 {
-    certifierreceptioncolis *newPage = new certifierreceptioncolis(this);
+    attribuercommandelivreur *newPage = new attribuercommandelivreur(this);
     newPage->show();
 }
-
-
 

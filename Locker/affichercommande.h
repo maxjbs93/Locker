@@ -16,14 +16,11 @@ public:
     ~affichercommande();
 
 private slots:
-    // Fonction pour charger les commandes depuis l'API
     void chargerCommandes();
-
-    // Fonction pour supprimer la commande
-    void supprimerCommande();
+    void supprimerCommande();  // Assure-toi que cette ligne est bien présente !
 
 private:
-    Ui::affichercommande *ui;  // Interface utilisateur générée par Qt Designer
+    Ui::affichercommande *ui;
 };
 
 #endif // AFFICHERCOMMANDE_H

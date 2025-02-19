@@ -80,7 +80,7 @@
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>160</y>
+       <y>130</y>
        <width>361</width>
        <height>41</height>
       </rect>
@@ -98,7 +98,7 @@
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>220</y>
+       <y>190</y>
        <width>361</width>
        <height>41</height>
       </rect>
@@ -116,7 +116,7 @@
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>340</y>
+       <y>310</y>
        <width>361</width>
        <height>41</height>
       </rect>
@@ -130,11 +130,11 @@
       <string>Afficher l'état des casiers</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_certifier_reception">
+    <widget class="QPushButton" name="pushButton_attribuer_commande_livreur">
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>400</y>
+       <y>370</y>
        <width>361</width>
        <height>41</height>
       </rect>
@@ -145,14 +145,14 @@
       </font>
      </property>
      <property name="text">
-      <string>Certifier la réception d'un colis par un livreur</string>
+      <string>Attribuer une commande à un livreur</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_afficher_commande">
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>280</y>
+       <y>250</y>
        <width>361</width>
        <height>41</height>
       </rect>
@@ -164,6 +164,24 @@
      </property>
      <property name="text">
       <string>Afficher les commandes existantes</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_ajout_livreur_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>430</y>
+       <width>361</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Afficher les livreurs</string>
      </property>
     </widget>
    </widget>
