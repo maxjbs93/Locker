@@ -31,6 +31,7 @@ public:
     QPushButton *pushButton_afficher_etat_casier;
     QPushButton *pushButton_attribuer_commande_livreur;
     QPushButton *pushButton_afficher_commande;
+    QPushButton *pushButton_afficher_livreur;
 
     void setupUi(QMainWindow *MainPage)
     {
@@ -42,6 +43,7 @@ public:
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName("groupBox");
         groupBox->setGeometry(QRect(0, 0, 640, 480));
+        groupBox->setStyleSheet(QString::fromUtf8(""));
         label_title = new QLabel(groupBox);
         label_title->setObjectName("label_title");
         label_title->setGeometry(QRect(170, 0, 271, 71));
@@ -62,26 +64,30 @@ public:
         label_title_2->setAlignment(Qt::AlignmentFlag::AlignCenter);
         pushButton_ajout_livreur = new QPushButton(groupBox);
         pushButton_ajout_livreur->setObjectName("pushButton_ajout_livreur");
-        pushButton_ajout_livreur->setGeometry(QRect(120, 160, 361, 41));
+        pushButton_ajout_livreur->setGeometry(QRect(40, 170, 241, 61));
         QFont font2;
         font2.setPointSize(10);
         pushButton_ajout_livreur->setFont(font2);
         pushButton_new_commande = new QPushButton(groupBox);
         pushButton_new_commande->setObjectName("pushButton_new_commande");
-        pushButton_new_commande->setGeometry(QRect(120, 220, 361, 41));
+        pushButton_new_commande->setGeometry(QRect(40, 270, 241, 61));
         pushButton_new_commande->setFont(font2);
         pushButton_afficher_etat_casier = new QPushButton(groupBox);
         pushButton_afficher_etat_casier->setObjectName("pushButton_afficher_etat_casier");
-        pushButton_afficher_etat_casier->setGeometry(QRect(120, 340, 361, 41));
+        pushButton_afficher_etat_casier->setGeometry(QRect(350, 270, 241, 61));
         pushButton_afficher_etat_casier->setFont(font2);
         pushButton_attribuer_commande_livreur = new QPushButton(groupBox);
         pushButton_attribuer_commande_livreur->setObjectName("pushButton_attribuer_commande_livreur");
-        pushButton_attribuer_commande_livreur->setGeometry(QRect(120, 400, 361, 41));
+        pushButton_attribuer_commande_livreur->setGeometry(QRect(40, 370, 241, 61));
         pushButton_attribuer_commande_livreur->setFont(font2);
         pushButton_afficher_commande = new QPushButton(groupBox);
         pushButton_afficher_commande->setObjectName("pushButton_afficher_commande");
-        pushButton_afficher_commande->setGeometry(QRect(120, 280, 361, 41));
+        pushButton_afficher_commande->setGeometry(QRect(350, 170, 241, 61));
         pushButton_afficher_commande->setFont(font2);
+        pushButton_afficher_livreur = new QPushButton(groupBox);
+        pushButton_afficher_livreur->setObjectName("pushButton_afficher_livreur");
+        pushButton_afficher_livreur->setGeometry(QRect(350, 370, 241, 61));
+        pushButton_afficher_livreur->setFont(font2);
         MainPage->setCentralWidget(centralwidget);
 
         retranslateUi(MainPage);
@@ -100,6 +106,7 @@ public:
         pushButton_afficher_etat_casier->setText(QCoreApplication::translate("MainPage", "Afficher l'\303\251tat des casiers", nullptr));
         pushButton_attribuer_commande_livreur->setText(QCoreApplication::translate("MainPage", "Attribuer une commande \303\240 un livreur", nullptr));
         pushButton_afficher_commande->setText(QCoreApplication::translate("MainPage", "Afficher les commandes existantes", nullptr));
+        pushButton_afficher_livreur->setText(QCoreApplication::translate("MainPage", "Afficher les livreurs", nullptr));
     } // retranslateUi
 
 };

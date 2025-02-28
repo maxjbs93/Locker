@@ -12,29 +12,35 @@ CONFIG += c++17
 SOURCES += \
     affichercommande.cpp \
     afficheretatcasier.cpp \
+    afficherlivreur.cpp \
     ajoutcommande.cpp \
     ajoutlivreur.cpp \
     attribuercommandelivreur.cpp \
     main.cpp \
     mainpage.cpp \
+    mainpagelivreur.cpp \
     mainwindow.cpp
 
 HEADERS += \
     affichercommande.h \
     afficheretatcasier.h \
+    afficherlivreur.h \
     ajoutcommande.h \
     ajoutlivreur.h \
     attribuercommandelivreur.h \
     mainpage.h \
+    mainpagelivreur.h \
     mainwindow.h
 
 FORMS += \
     affichercommande.ui \
     afficheretatcasier.ui \
+    afficherlivreur.ui \
     ajoutcommande.ui \
     ajoutlivreur.ui \
     attribuercommandelivreur.ui \
     mainpage.ui \
+    mainpagelivreur.ui \
     mainwindow.ui
 
 # Default rules for deployment.

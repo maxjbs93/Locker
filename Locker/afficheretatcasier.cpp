@@ -15,13 +15,23 @@ afficheretatcasier::afficheretatcasier(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Ajouter les colonnes au tableWidget par code
-    ui->tableWidget->setColumnCount(6);  // Définit le nombre de colonnes
+    // Ajouter les colonnes au tableWidget
+    ui->tableWidget->setColumnCount(6);
     ui->tableWidget->setHorizontalHeaderLabels({"ID Casier", "Taille", "Poids Max", "Etat", "Code", "ID Commande"});
 
-    // Appel à la fonction pour récupérer les données
+    // Ajuster la taille des colonnes pour occuper toute la largeur
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // Empêcher l'édition des cellules
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // Sélectionner toute la ligne lorsqu'on clique sur une cellule
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    // Récupérer les données des casiers
     fetchCasierData();
 }
+
 
 afficheretatcasier::~afficheretatcasier()
 {

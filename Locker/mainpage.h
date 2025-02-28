@@ -7,6 +7,7 @@
 #include "afficheretatcasier.h"
 #include "attribuercommandelivreur.h"
 #include "affichercommande.h"
+#include "afficherlivreur.h"
 namespace Ui {
 class MainPage;
 }
@@ -24,13 +25,13 @@ private slots:
 
     void on_pushButton_new_commande_clicked();
 
-    void on_pushButton_supp_commande_clicked();
-
     void on_pushButton_afficher_etat_casier_clicked();
 
     void on_pushButton_afficher_commande_clicked();
 
     void on_pushButton_attribuer_commande_livreur_clicked();
+
+    void on_pushButton_afficher_livreur_clicked();
 
 private:
     Ui::MainPage *ui;

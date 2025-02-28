@@ -43,7 +43,14 @@ void MainPage::on_pushButton_afficher_etat_casier_clicked()
 
 void MainPage::on_pushButton_attribuer_commande_livreur_clicked()
 {
-    attribuercommandelivreur *newPage = new attribuercommandelivreur(this);
+    AttribuerCommandeLivreur *newPage = new AttribuerCommandeLivreur(this);
     newPage->show();
 }
 
+
+
+void MainPage::on_pushButton_afficher_livreur_clicked()
+{
+    afficherlivreur *newPage = new afficherlivreur(this);
+    newPage->show();
+}

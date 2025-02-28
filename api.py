@@ -18,25 +18,30 @@ def get_db_connection():
 # Route pour l'authentification
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.json  # Récupération des données envoyées par Qt
-    username = data.get("pseudo")  # Prendre le pseudo envoyé
-    password = data.get("mdp")    # Prendre le mot de passe envoyé
+    data = request.json  
+    username = data.get("username")  
+    password = data.get("password")  
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Vérification des identifiants dans la base de données
-    sql = "SELECT * FROM commercants WHERE pseudo=%s AND mdp=%s"
-    cursor.execute(sql, (username, password))
+    # Vérifier si c'est un commerçant
+    cursor.execute("SELECT id, pseudo AS username, 'commercant' AS role FROM commercants WHERE pseudo=%s AND mdp=%s", (username, password))
     user = cursor.fetchone()
+
+    # Sinon, vérifier si c'est un livreur
+    if not user:
+        cursor.execute("SELECT id, username, 'livreur' AS role FROM livreurs WHERE username=%s AND password=%s", (username, password))
+        user = cursor.fetchone()
 
     cursor.close()
     conn.close()
 
     if user:
-        return jsonify({"status": "success", "message": "Connexion réussie"})
+        return jsonify({"status": "success", "message": "Connexion réussie", "user": user})
     else:
         return jsonify({"status": "error", "message": "Nom d'utilisateur ou mot de passe incorrect"})
+
 
 # Route pour ajouter un livreur
 @app.route('/ajouter_livreur', methods=['POST'])
@@ -182,13 +187,86 @@ def afficher_livreurs():
         cursor = conn.cursor()
 
         # Récupérer les informations des livreurs depuis la table 'livreurs'
-        cursor.execute("SELECT nom, prenom, adresse, username, password, statut FROM livreurs")
+        cursor.execute("SELECT id, nom, prenom, adresse, username, password, statut FROM livreurs")
         livreurs = cursor.fetchall()
 
         cursor.close()
         conn.close()
 
         return jsonify({"status": "success", "livreurs": livreurs})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/supprimer_livreur', methods=['POST'])
+def supprimer_livreur():
+    data = request.json
+    livreur_id = data.get("id")
+
+    if not livreur_id:
+        return jsonify({"status": "error", "message": "ID du livreur manquant"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Vérifier si le livreur existe
+        cursor.execute("SELECT * FROM livreurs WHERE id = %s", (livreur_id,))
+        livreur = cursor.fetchone()
+        if not livreur:
+            return jsonify({"status": "error", "message": "Livreur introuvable"}), 404
+
+        # Supprimer le livreur
+        cursor.execute("DELETE FROM livreurs WHERE id = %s", (livreur_id,))
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Livreur supprimé avec succès !"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/attribuer_livreur', methods=['POST'])
+def attribuer_livreur():
+    data = request.json  # Récupère les données envoyées par Qt
+    commande_id = data.get("commande_id")  # L'ID de la commande
+    livreur_id = data.get("livreur_id")    # L'ID du livreur à attribuer
+
+    if not commande_id or not livreur_id:
+        return jsonify({"status": "error", "message": "Commande ID ou Livreur ID manquant"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Vérifier si la commande existe
+        cursor.execute("SELECT * FROM commandes WHERE id = %s", (commande_id,))
+        commande = cursor.fetchone()
+        if not commande:
+            return jsonify({"status": "error", "message": "Commande introuvable"}), 404
+
+        # Vérifier si le livreur existe
+        cursor.execute("SELECT * FROM livreurs WHERE id = %s", (livreur_id,))
+        livreur = cursor.fetchone()
+        if not livreur:
+            return jsonify({"status": "error", "message": "Livreur introuvable"}), 404
+
+        # Mettre à jour la commande avec l'ID du livreur
+        cursor.execute("UPDATE commandes SET livreur_id = %s, statut = 'en cours' WHERE id = %s", (livreur_id, commande_id))
+
+        # Mettre à jour le statut du livreur à "en cours de livraison"
+        cursor.execute("UPDATE livreurs SET statut = 'en cours de livraison' WHERE id = %s", (livreur_id,))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"status": "success", "message": "Livreur attribué à la commande et statut du livreur mis à jour !"})
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

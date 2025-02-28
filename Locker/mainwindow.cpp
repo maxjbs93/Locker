@@ -7,6 +7,9 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#include "mainpage.h"  // Fichier pour l'interface commerçant
+#include "mainpagelivreur.h"    // Fichier pour l'interface livreur
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -21,12 +24,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_login_clicked()
 {
-    login(); // Appelle la fonction login()
+    login();
 }
 
 void MainWindow::on_pushButton_cancel_clicked()
 {
-    this->close(); // Ferme la fenêtre de connexion
+    this->close();
 }
 
 void MainWindow::login()
@@ -39,44 +42,45 @@ void MainWindow::login()
         return;
     }
 
-    // Création de la requête HTTP
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("http://127.0.0.1:5000/login");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    // Création du JSON avec les identifiants
     QJsonObject json;
-    json["pseudo"] = username; // Utilise 'pseudo' ici au lieu de 'username'
-    json["mdp"] = password;    // Utilise 'mdp' ici au lieu de 'password'
+    json["username"] = username;
+    json["password"] = password;
     QJsonDocument doc(json);
     QByteArray data = doc.toJson();
 
-    qDebug() << "Envoi de la requête POST vers" << url.toString();
-    qDebug() << "Données envoyées :" << data;
-
-    // Envoi de la requête POST
     QNetworkReply *reply = manager->post(request, data);
 
-    // Gérer la réponse de l'API
     connect(reply, &QNetworkReply::finished, this, [=]() {
         if (reply->error() != QNetworkReply::NoError) {
-            qDebug() << "Erreur réseau :" << reply->errorString();
             QMessageBox::warning(this, "Erreur Réseau", reply->errorString());
             reply->deleteLater();
             return;
         }
 
         QByteArray response_data = reply->readAll();
-        qDebug() << "Réponse reçue de l'API :" << response_data;
-
         QJsonDocument response_json = QJsonDocument::fromJson(response_data);
         QJsonObject response_obj = response_json.object();
 
         if (response_obj["status"].toString() == "success") {
-            QMessageBox::information(this, "Connexion réussie", "Bienvenue !");
-            MainPage *mainPage = new MainPage();
-            mainPage->show();
+            QJsonObject user = response_obj["user"].toObject();
+            QString role = user["role"].toString();
+            QString username = user["username"].toString();  // Récupérer le username
+
+            if (role == "commercant") {
+                QMessageBox::information(this, "Connexion réussie", "Bienvenue, " + username + " !");
+                MainPage *mainPage = new MainPage();
+                mainPage->show();
+            } else if (role == "livreur") {
+                QMessageBox::information(this, "Connexion réussie", "Bienvenue, " + username + " !");
+                mainpagelivreur *newPage = new mainpagelivreur();
+                newPage->show();
+            }
+
             this->close();
         } else {
             QMessageBox::warning(this, "Erreur", response_obj["message"].toString());
@@ -85,3 +89,4 @@ void MainWindow::login()
         reply->deleteLater();
     });
 }
+

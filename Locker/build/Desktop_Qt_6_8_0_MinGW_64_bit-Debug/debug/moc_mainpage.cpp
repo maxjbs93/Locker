@@ -40,10 +40,10 @@ constexpr auto qt_meta_stringdata_CLASSMainPageENDCLASS = QtMocHelpers::stringDa
     "on_pushButton_ajout_livreur_clicked",
     "",
     "on_pushButton_new_commande_clicked",
-    "on_pushButton_supp_commande_clicked",
     "on_pushButton_afficher_etat_casier_clicked",
     "on_pushButton_afficher_commande_clicked",
-    "on_pushButton_attribuer_commande_livreur_clicked"
+    "on_pushButton_attribuer_commande_livreur_clicked",
+    "on_pushButton_afficher_livreur_clicked"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -95,13 +95,13 @@ Q_CONSTINIT const QMetaObject MainPage::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_new_commande_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_pushButton_supp_commande_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_afficher_etat_casier_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_afficher_commande_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_attribuer_commande_livreur_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_afficher_livreur_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -115,9 +115,10 @@ void MainPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         switch (_id) {
         case 0: _t->on_pushButton_ajout_livreur_clicked(); break;
         case 1: _t->on_pushButton_new_commande_clicked(); break;
-        case 3: _t->on_pushButton_afficher_etat_casier_clicked(); break;
-        case 4: _t->on_pushButton_afficher_commande_clicked(); break;
-        case 5: _t->on_pushButton_attribuer_commande_livreur_clicked(); break;
+        case 2: _t->on_pushButton_afficher_etat_casier_clicked(); break;
+        case 3: _t->on_pushButton_afficher_commande_clicked(); break;
+        case 4: _t->on_pushButton_attribuer_commande_livreur_clicked(); break;
+        case 5: _t->on_pushButton_afficher_livreur_clicked(); break;
         default: ;
         }
     }

@@ -139,7 +139,7 @@ public:
         label_2->setText(QCoreApplication::translate("ajoutcommande", "Veuillez remplir les champs suivants :", nullptr));
         label_3->setText(QCoreApplication::translate("ajoutcommande", "Mail du client :", nullptr));
         label_4->setText(QCoreApplication::translate("ajoutcommande", "Taille de casier n\303\251cessaire : ", nullptr));
-        label_5->setText(QCoreApplication::translate("ajoutcommande", "Poids du colis :", nullptr));
+        label_5->setText(QCoreApplication::translate("ajoutcommande", "Poids du colis (kg) :", nullptr));
         label_6->setText(QCoreApplication::translate("ajoutcommande", "Nom du commer\303\247ant :", nullptr));
         label_7->setText(QCoreApplication::translate("ajoutcommande", "Adresse du commer\303\247ant :", nullptr));
         lineEdit_mail->setPlaceholderText(QCoreApplication::translate("ajoutcommande", "ishakabdoul@gmail.com", nullptr));

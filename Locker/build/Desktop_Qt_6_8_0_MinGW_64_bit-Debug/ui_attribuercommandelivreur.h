@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -25,6 +27,10 @@ public:
     QWidget *centralwidget;
     QLabel *label;
     QLabel *label_2;
+    QComboBox *comboBoxCommandes;
+    QComboBox *comboBoxLivreurs;
+    QLabel *label_3;
+    QPushButton *pushButton_attribuer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -51,6 +57,20 @@ public:
         font1.setBold(false);
         label_2->setFont(font1);
         label_2->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        comboBoxCommandes = new QComboBox(centralwidget);
+        comboBoxCommandes->setObjectName("comboBoxCommandes");
+        comboBoxCommandes->setGeometry(QRect(360, 150, 69, 22));
+        comboBoxLivreurs = new QComboBox(centralwidget);
+        comboBoxLivreurs->setObjectName("comboBoxLivreurs");
+        comboBoxLivreurs->setGeometry(QRect(360, 330, 69, 22));
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName("label_3");
+        label_3->setGeometry(QRect(0, 230, 781, 51));
+        label_3->setFont(font1);
+        label_3->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        pushButton_attribuer = new QPushButton(centralwidget);
+        pushButton_attribuer->setObjectName("pushButton_attribuer");
+        pushButton_attribuer->setGeometry(QRect(310, 450, 181, 41));
         attribuercommandelivreur->setCentralWidget(centralwidget);
         menubar = new QMenuBar(attribuercommandelivreur);
         menubar->setObjectName("menubar");
@@ -69,7 +89,9 @@ public:
     {
         attribuercommandelivreur->setWindowTitle(QCoreApplication::translate("attribuercommandelivreur", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("attribuercommandelivreur", "Attribution d'un livreur \303\240 un colis", nullptr));
-        label_2->setText(QCoreApplication::translate("attribuercommandelivreur", "Quel livreur souhaitez-vous attribuer ?", nullptr));
+        label_2->setText(QCoreApplication::translate("attribuercommandelivreur", "S\303\251lectionnez une commande : ", nullptr));
+        label_3->setText(QCoreApplication::translate("attribuercommandelivreur", "A quel livreur souhaitez-vous l'attribuer ?", nullptr));
+        pushButton_attribuer->setText(QCoreApplication::translate("attribuercommandelivreur", "Attribuer", nullptr));
     } // retranslateUi
 
 };

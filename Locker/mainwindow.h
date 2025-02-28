@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include "mainpage.h"
+#include "mainpagelivreur.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
