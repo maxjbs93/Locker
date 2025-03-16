@@ -4,6 +4,7 @@ release/afficherlivreur.o
 release/ajoutcommande.o
 release/ajoutlivreur.o
 release/attribuercommandelivreur.o
+release/certifierreceptioncolis.o
 release/main.o
 release/mainpage.o
 release/mainpagelivreur.o
@@ -14,6 +15,7 @@ release/moc_afficherlivreur.o
 release/moc_ajoutcommande.o
 release/moc_ajoutlivreur.o
 release/moc_attribuercommandelivreur.o
+release/moc_certifierreceptioncolis.o
 release/moc_mainpage.o
 release/moc_mainpagelivreur.o
 release/moc_mainwindow.o

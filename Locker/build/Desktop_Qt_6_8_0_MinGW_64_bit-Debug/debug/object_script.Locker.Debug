@@ -4,6 +4,7 @@ debug/afficherlivreur.o
 debug/ajoutcommande.o
 debug/ajoutlivreur.o
 debug/attribuercommandelivreur.o
+debug/certifierreceptioncolis.o
 debug/main.o
 debug/mainpage.o
 debug/mainpagelivreur.o
@@ -14,6 +15,7 @@ debug/moc_afficherlivreur.o
 debug/moc_ajoutcommande.o
 debug/moc_ajoutlivreur.o
 debug/moc_attribuercommandelivreur.o
+debug/moc_certifierreceptioncolis.o
 debug/moc_mainpage.o
 debug/moc_mainpagelivreur.o
 debug/moc_mainwindow.o

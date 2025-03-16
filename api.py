@@ -232,9 +232,9 @@ def supprimer_livreur():
 
 @app.route('/attribuer_livreur', methods=['POST'])
 def attribuer_livreur():
-    data = request.json  # Récupère les données envoyées par Qt
-    commande_id = data.get("commande_id")  # L'ID de la commande
-    livreur_id = data.get("livreur_id")    # L'ID du livreur à attribuer
+    data = request.json  
+    commande_id = data.get("commande_id")
+    livreur_id = data.get("livreur_id")
 
     if not commande_id or not livreur_id:
         return jsonify({"status": "error", "message": "Commande ID ou Livreur ID manquant"}), 400
@@ -243,33 +243,73 @@ def attribuer_livreur():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Vérifier si la commande existe
         cursor.execute("SELECT * FROM commandes WHERE id = %s", (commande_id,))
         commande = cursor.fetchone()
         if not commande:
             return jsonify({"status": "error", "message": "Commande introuvable"}), 404
 
-        # Vérifier si le livreur existe
         cursor.execute("SELECT * FROM livreurs WHERE id = %s", (livreur_id,))
         livreur = cursor.fetchone()
         if not livreur:
             return jsonify({"status": "error", "message": "Livreur introuvable"}), 404
 
-        # Mettre à jour la commande avec l'ID du livreur
-        cursor.execute("UPDATE commandes SET livreur_id = %s, statut = 'en cours' WHERE id = %s", (livreur_id, commande_id))
-
-        # Mettre à jour le statut du livreur à "en cours de livraison"
-        cursor.execute("UPDATE livreurs SET statut = 'en cours de livraison' WHERE id = %s", (livreur_id,))
-
+        cursor.execute("UPDATE commandes SET livreur_id = %s, statut = 'en attente de confirmation' WHERE id = %s", (livreur_id, commande_id))
+        cursor.execute("UPDATE livreurs SET statut = 'en attente de confirmation' WHERE id = %s", (livreur_id,))
         conn.commit()
 
         cursor.close()
         conn.close()
 
-        return jsonify({"status": "success", "message": "Livreur attribué à la commande et statut du livreur mis à jour !"})
+        return jsonify({"status": "success", "message": "Livreur attribué à la commande, en attente de validation par le livreur."})
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+    
+
+@app.route('/livreur/repondre_commande', methods=['POST'])
+def repondre_commande():
+    data = request.json  
+    commande_id = data.get("commande_id")
+    livreur_id = data.get("livreur_id")
+    reponse = data.get("reponse")  # "accepter" ou "refuser"
+
+    if not commande_id or not livreur_id or not reponse:
+        return jsonify({"status": "error", "message": "Données manquantes"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM commandes WHERE id = %s AND livreur_id = %s", (commande_id, livreur_id))
+        commande = cursor.fetchone()
+        if not commande:
+            return jsonify({"status": "error", "message": "Commande non attribuée à ce livreur"}), 404
+
+        if reponse == "accepter":
+            cursor.execute("UPDATE commandes SET statut = 'en cours' WHERE id = %s", (commande_id,))
+            cursor.execute("UPDATE livreurs SET statut = 'en cours de livraison' WHERE id = %s", (livreur_id,))
+            conn.commit()
+            message = "Commande acceptée, mise à jour des statuts effectuée."
+
+        elif reponse == "refuser":
+            cursor.execute("UPDATE commandes SET livreur_id = NULL, statut = 'en attente' WHERE id = %s", (commande_id,))
+            cursor.execute("UPDATE livreurs SET statut = 'disponible' WHERE id = %s", (livreur_id,))
+            conn.commit()
+            message = "Commande refusée, en attente d'un autre livreur."
+
+        else:
+            return jsonify({"status": "error", "message": "Réponse invalide"}), 400
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"status": "success", "message": message})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
 
 
 if __name__ == '__main__':

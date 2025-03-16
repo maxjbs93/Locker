@@ -16,6 +16,7 @@ SOURCES += \
     ajoutcommande.cpp \
     ajoutlivreur.cpp \
     attribuercommandelivreur.cpp \
+    certifierreceptioncolis.cpp \
     main.cpp \
     mainpage.cpp \
     mainpagelivreur.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     ajoutcommande.h \
     ajoutlivreur.h \
     attribuercommandelivreur.h \
+    certifierreceptioncolis.h \
     mainpage.h \
     mainpagelivreur.h \
     mainwindow.h
@@ -39,6 +41,7 @@ FORMS += \
     ajoutcommande.ui \
     ajoutlivreur.ui \
     attribuercommandelivreur.ui \
+    certifierreceptioncolis.ui \
     mainpage.ui \
     mainpagelivreur.ui \
     mainwindow.ui
