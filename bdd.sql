@@ -14,11 +14,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Listage de la structure de la base pour locker
-CREATE DATABASE IF NOT EXISTS `locker` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `locker`;
-
 -- Listage de la structure de table locker. casiers
 CREATE TABLE IF NOT EXISTS `casiers` (
   `id_casier` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id unique du casier',
@@ -29,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `casiers` (
   `id_commande` int(11) NOT NULL DEFAULT 0,
   `date_occupation` datetime DEFAULT NULL COMMENT 'Date et heure de l''occupation, NULL si libre',
   PRIMARY KEY (`id_casier`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1031 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1032 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table locker.casiers : ~20 rows (environ)
 INSERT INTO `casiers` (`id_casier`, `taille`, `poids_max`, `etat`, `code`, `id_commande`, `date_occupation`) VALUES
-	(1, 'petit', 5.00, 'libre', '0000', 0, '2025-02-17 22:48:33'),
+	(1, 'petit', 5.00, 'libre', '0000', 0, '0000-00-00 00:00:00'),
 	(2, 'petit', 5.00, 'libre', '0000', 0, NULL),
 	(3, 'petit', 5.00, 'libre', '0000', 0, NULL),
 	(4, 'petit', 5.00, 'libre', '0000', 0, NULL),
@@ -77,15 +72,16 @@ CREATE TABLE IF NOT EXISTS `commandes` (
   `date_creation` timestamp NOT NULL DEFAULT current_timestamp(),
   `client_id` int(11) DEFAULT NULL,
   `commercant_id` int(11) DEFAULT NULL,
-  `statut` enum('en_attente','en_cours','livrée') DEFAULT 'en_attente',
+  `statut` enum('en attente','en attente de confirmation','en cours','livrée') DEFAULT 'en attente',
+  `livreur_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table locker.commandes : ~3 rows (environ)
-INSERT INTO `commandes` (`id`, `client_email`, `taille_casier`, `poids_colis`, `commercant_nom`, `commercant_adresse`, `date_creation`, `client_id`, `commercant_id`, `statut`) VALUES
-	(107, 'maxime@gmail.com', 'petit', 2.50, 'Admin', '7 Rue Poulain', '2025-02-16 10:50:00', NULL, NULL, 'en_attente'),
-	(109, 'mathieu@gmail.com', 'petit', 1.00, 'Admin', '8 Avenue Chauve', '2025-02-16 11:12:40', NULL, NULL, 'en_attente'),
-	(116, 'ishakabdoul@gmail.com', 'moyen', 6.00, 'Maxime', 'oui', '2025-02-19 10:30:04', NULL, NULL, 'en_attente');
+INSERT INTO `commandes` (`id`, `client_email`, `taille_casier`, `poids_colis`, `commercant_nom`, `commercant_adresse`, `date_creation`, `client_id`, `commercant_id`, `statut`, `livreur_id`) VALUES
+	(107, 'maxime@gmail.com', 'petit', 2.50, 'Admin', '7 Rue Poulain', '2025-02-16 10:50:00', NULL, NULL, 'en cours', 1),
+	(109, 'mathieu@gmail.com', 'petit', 1.00, 'Admin', '8 Avenue Chauve', '2025-02-16 11:12:40', NULL, NULL, 'en cours', 2),
+	(116, 'ishakabdoul@gmail.com', 'moyen', 6.00, 'Maxime', 'oui', '2025-02-19 10:30:04', NULL, NULL, 'en cours', 3);
 
 -- Listage de la structure de table locker. commercants
 CREATE TABLE IF NOT EXISTS `commercants` (
@@ -115,14 +111,15 @@ CREATE TABLE IF NOT EXISTS `livreurs` (
   `tel` varchar(50) DEFAULT NULL COMMENT 'téléphone du livreur',
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
+  `statut` enum('disponible','en attente de confirmation','en cours de livraison') DEFAULT 'disponible',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table locker.livreurs : ~2 rows (environ)
-INSERT INTO `livreurs` (`id`, `prenom`, `nom`, `adresse`, `email`, `tel`, `username`, `password`) VALUES
-	(1, 'Maxime', 'SFRISO', '4 Avenue du 4 ', 'maxime@gmail.com', '0604050203', NULL, NULL),
-	(107, 'Rayane', 'GERVAIS', '4 Place des Aubépines', '', NULL, 'rayane_gervais', 'rgervais'),
-	(108, 'dsf', 'qsdf', 'dqsf', '', NULL, 'sdqf', 'qdsf');
+-- Listage des données de la table locker.livreurs : ~3 rows (environ)
+INSERT INTO `livreurs` (`id`, `prenom`, `nom`, `adresse`, `email`, `tel`, `username`, `password`, `statut`) VALUES
+	(1, 'Maxime', 'SFRISO', '4 Avenue du 4 ', 'maxime@gmail.com', '0604050203', 'max_jbs', 'maxou', 'en cours de livraison'),
+	(2, 'Rayane', 'GERVAIS', '4 Place des Aubépines', '', NULL, 'rayane_gervais', 'rgervais', 'en cours de livraison'),
+	(3, 'qsdf', 'qsdf', 'qsdf', '', NULL, 'sdfq', 'sf', 'en cours de livraison');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
