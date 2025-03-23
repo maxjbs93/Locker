@@ -3,17 +3,18 @@ import pymysql
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Autorise les requêtes de Qt vers l'API
+CORS(app)  # Autorise les requêtes cross-origin
 
 # Connexion à la base de données
 def get_db_connection():
     return pymysql.connect(
-        host="localhost",  # Remplace par l'hôte de ta BD si nécessaire
-        user="root",       # Remplace par ton utilisateur
-        password="",       # Remplace par ton mot de passe
-        database="locker", # Nom de ta base de données
+        host="localhost",
+        user="root",
+        password="",
+        database="locker",
         cursorclass=pymysql.cursors.DictCursor
     )
+
 
 # Route pour l'authentification
 @app.route('/login', methods=['POST'])
@@ -22,25 +23,27 @@ def login():
     username = data.get("username")  
     password = data.get("password")  
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-    # Vérifier si c'est un commerçant
-    cursor.execute("SELECT id, pseudo AS username, 'commercant' AS role FROM commercants WHERE pseudo=%s AND mdp=%s", (username, password))
-    user = cursor.fetchone()
-
-    # Sinon, vérifier si c'est un livreur
-    if not user:
-        cursor.execute("SELECT id, username, 'livreur' AS role FROM livreurs WHERE username=%s AND password=%s", (username, password))
+        # Vérifier si c'est un commerçant
+        cursor.execute("SELECT id, pseudo AS username, 'commercant' AS role FROM commercants WHERE pseudo=%s AND mdp=%s", (username, password))
         user = cursor.fetchone()
 
-    cursor.close()
-    conn.close()
+        # Sinon, vérifier si c'est un livreur
+        if not user:
+            cursor.execute("SELECT id, username, 'livreur' AS role FROM livreurs WHERE username=%s AND password=%s", (username, password))
+            user = cursor.fetchone()
 
-    if user:
-        return jsonify({"status": "success", "message": "Connexion réussie", "user": user})
-    else:
-        return jsonify({"status": "error", "message": "Nom d'utilisateur ou mot de passe incorrect"})
+        return jsonify({"status": "success", "message": "Connexion réussie", "user": user}) if user else jsonify({"status": "error", "message": "Nom d'utilisateur ou mot de passe incorrect"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
 
 
 # Route pour ajouter un livreur
@@ -308,6 +311,33 @@ def repondre_commande():
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+    
+
+# Route pour afficher les commandes attribuées à un livreur
+@app.route('/livreur/commandes_attribuees/<int:livreur_id>', methods=['GET'])
+def commandes_attribuees(livreur_id):
+    print(f"Livreur ID reçu : {livreur_id}")  # Log de l'ID pour vérifier
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()  # Retire l'argument 'dictionary' de ici
+
+        cursor.execute("""
+            SELECT id, client_email, taille_casier 
+            FROM commandes 
+            WHERE livreur_id = %s
+        """, (livreur_id,))
+
+        commandes = cursor.fetchall()
+
+        return jsonify({"status": "success", "commandes": commandes})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
 
 
 

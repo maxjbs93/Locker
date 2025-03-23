@@ -3,9 +3,7 @@
 
 #include <QMainWindow>
 #include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QJsonArray>
-#include <QString>
 
 namespace Ui {
 class certifierreceptioncolis;
@@ -18,18 +16,18 @@ class certifierreceptioncolis : public QMainWindow
 public:
     explicit certifierreceptioncolis(QWidget *parent = nullptr);
     ~certifierreceptioncolis();
-    void setLivreurId(int id) {
-        livreurId = id;
-    }
+
+    void setLivreurId(int id); // Permet de définir l'ID du livreur connecté
 
 private:
     Ui::certifierreceptioncolis *ui;
     QNetworkAccessManager *networkManager;
-    int livreurId; // Identifiant du livreur connecté, à initialiser avec la valeur appropriée
 
-    void loadAssignedOrders(); // Charger les commandes attribuées
-    void updateTable(const QJsonArray &commandes); // Mettre à jour le tableau des commandes
-    void repondreCommande(int commandeId, const QString &reponse); // Accepter ou refuser la commande
+    int idLivreur = 0; // ID du livreur connecté (0 par défaut)
+
+    void loadAssignedOrders(); // Charger les commandes du livreur
+    void updateTable(const QJsonArray &commandes); // Met à jour la table des commandes
+    void repondreCommande(int idCommande, const QString &action); // Répondre à une commande
 };
 
 #endif // CERTIFIERRECEPTIONCOLIS_H

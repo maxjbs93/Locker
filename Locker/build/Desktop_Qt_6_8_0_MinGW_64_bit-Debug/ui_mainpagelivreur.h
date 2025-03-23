@@ -28,6 +28,7 @@ public:
     QLabel *label_2;
     QPushButton *pushButton_certifierreceptioncolis;
     QPushButton *pushButton_certifierlivraisoncommande;
+    QPushButton *pushButton_deconnexion;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -58,6 +59,9 @@ public:
         pushButton_certifierlivraisoncommande->setObjectName("pushButton_certifierlivraisoncommande");
         pushButton_certifierlivraisoncommande->setGeometry(QRect(200, 200, 391, 81));
         pushButton_certifierlivraisoncommande->setFont(font1);
+        pushButton_deconnexion = new QPushButton(centralwidget);
+        pushButton_deconnexion->setObjectName("pushButton_deconnexion");
+        pushButton_deconnexion->setGeometry(QRect(360, 510, 91, 24));
         mainpagelivreur->setCentralWidget(centralwidget);
         menubar = new QMenuBar(mainpagelivreur);
         menubar->setObjectName("menubar");
@@ -79,6 +83,7 @@ public:
         label_2->setText(QCoreApplication::translate("mainpagelivreur", "Que souhaitez- vous faire ?", nullptr));
         pushButton_certifierreceptioncolis->setText(QCoreApplication::translate("mainpagelivreur", "Certifier la r\303\251ception d'un colis", nullptr));
         pushButton_certifierlivraisoncommande->setText(QCoreApplication::translate("mainpagelivreur", "Certifier la livraison d'une commande", nullptr));
+        pushButton_deconnexion->setText(QCoreApplication::translate("mainpagelivreur", "Se d\303\251connecter", nullptr));
     } // retranslateUi
 
 };

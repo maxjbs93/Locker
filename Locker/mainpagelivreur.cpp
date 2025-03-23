@@ -2,12 +2,19 @@
 #include "ui_mainpagelivreur.h"
 #include "certifierreceptioncolis.h"
 
-mainpagelivreur::mainpagelivreur(QWidget *parent)
+mainpagelivreur::mainpagelivreur(int livreurId, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::mainpagelivreur)
+    , m_livreurId(livreurId)  // Initialiser l'ID du livreur
 {
     ui->setupUi(this);
-    // Ajoute d'autres initialisations si nécessaire
+
+    if (livreurId == 0) {
+        QMessageBox::warning(this, "Erreur", "ID du livreur non défini.");
+    } else {
+        // Ici, tu peux charger les informations du livreur et les commandes attribuées
+        loadAssignedOrders();  // Appelle une méthode pour charger les commandes
+    }
 }
 
 mainpagelivreur::~mainpagelivreur()
@@ -15,8 +22,17 @@ mainpagelivreur::~mainpagelivreur()
     delete ui;
 }
 
-// Supposons que livreurId est déjà défini quelque part dans ton code
-int livreurId = 1;  // Exemple d'ID de livreur, tu dois récupérer cet ID lors de la connexion
+void mainpagelivreur::loadAssignedOrders()
+{
+    // Assure-toi que cette méthode utilise correctement l'ID du livreur
+    if (m_livreurId == 0) {
+        QMessageBox::warning(this, "Erreur", "ID du livreur non défini.");
+        return;
+    }
+
+    // Charger les commandes attribuées au livreur en utilisant l'ID
+    // Par exemple, utiliser l'ID pour appeler une API ou une base de données
+}
 
 void mainpagelivreur::on_pushButton_certifierreceptioncolis_clicked()
 {
@@ -24,7 +40,14 @@ void mainpagelivreur::on_pushButton_certifierreceptioncolis_clicked()
     certifierreceptioncolis *newPage = new certifierreceptioncolis(this);
 
     // Passe l'ID du livreur à la fenêtre de certification
-    newPage->setLivreurId(livreurId);  // Passe l'ID du livreur à la fenêtre
+    newPage->setLivreurId(m_livreurId);  // Utilise m_livreurId
 
     newPage->show();  // Affiche la fenêtre de certification
+}
+
+void mainpagelivreur::on_pushButton_deconnexion_clicked()
+{
+    this->close();
+    MainWindow *mainWindow = new MainWindow(this);
+    mainWindow->show();
 }

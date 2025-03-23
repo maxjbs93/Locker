@@ -187,6 +187,19 @@
       <string>Afficher les livreurs</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_deconnexion">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>440</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Déconnexion</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

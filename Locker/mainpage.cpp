@@ -54,3 +54,10 @@ void MainPage::on_pushButton_afficher_livreur_clicked()
     afficherlivreur *newPage = new afficherlivreur(this);
     newPage->show();
 }
+
+void MainPage::on_pushButton_deconnexion_clicked()
+{
+    MainWindow *mainWindow = new MainWindow();
+    mainWindow->show();
+}
+

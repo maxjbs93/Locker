@@ -9,6 +9,7 @@
 
 #include "mainpage.h"  // Fichier pour l'interface commerçant
 #include "mainpagelivreur.h"    // Fichier pour l'interface livreur
+#include "certifierreceptioncolis.h"  // Importation de la classe certifierreceptioncolis
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -77,10 +78,18 @@ void MainWindow::login()
                 mainPage->show();
             } else if (role == "livreur") {
                 QMessageBox::information(this, "Connexion réussie", "Bienvenue, " + username + " !");
-                mainpagelivreur *newPage = new mainpagelivreur();
+
+                // Récupère l'ID du livreur depuis la réponse du backend
+                int livreurId = user["id"].toInt();  // Récupérer l'ID du livreur
+
+                qDebug() << "ID du livreur transmis : " << livreurId;
+
+                // Ouvre la fenêtre principale du livreur
+                mainpagelivreur *newPage = new mainpagelivreur(livreurId);  // Passe l'ID du livreur
                 newPage->show();
             }
 
+            // Ferme la fenêtre de login après l'ouverture de la page correspondante
             this->close();
         } else {
             QMessageBox::warning(this, "Erreur", response_obj["message"].toString());
@@ -89,4 +98,3 @@ void MainWindow::login()
         reply->deleteLater();
     });
 }
-

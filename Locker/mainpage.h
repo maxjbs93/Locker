@@ -8,6 +8,7 @@
 #include "attribuercommandelivreur.h"
 #include "affichercommande.h"
 #include "afficherlivreur.h"
+#include "mainwindow.h"
 namespace Ui {
 class MainPage;
 }
@@ -32,6 +33,8 @@ private slots:
     void on_pushButton_attribuer_commande_livreur_clicked();
 
     void on_pushButton_afficher_livreur_clicked();
+
+    void on_pushButton_deconnexion_clicked();
 
 private:
     Ui::MainPage *ui;

@@ -32,6 +32,7 @@ public:
     QPushButton *pushButton_attribuer_commande_livreur;
     QPushButton *pushButton_afficher_commande;
     QPushButton *pushButton_afficher_livreur;
+    QPushButton *pushButton_deconnexion;
 
     void setupUi(QMainWindow *MainPage)
     {
@@ -88,6 +89,9 @@ public:
         pushButton_afficher_livreur->setObjectName("pushButton_afficher_livreur");
         pushButton_afficher_livreur->setGeometry(QRect(350, 370, 241, 61));
         pushButton_afficher_livreur->setFont(font2);
+        pushButton_deconnexion = new QPushButton(groupBox);
+        pushButton_deconnexion->setObjectName("pushButton_deconnexion");
+        pushButton_deconnexion->setGeometry(QRect(280, 440, 75, 24));
         MainPage->setCentralWidget(centralwidget);
 
         retranslateUi(MainPage);
@@ -107,6 +111,7 @@ public:
         pushButton_attribuer_commande_livreur->setText(QCoreApplication::translate("MainPage", "Attribuer une commande \303\240 un livreur", nullptr));
         pushButton_afficher_commande->setText(QCoreApplication::translate("MainPage", "Afficher les commandes existantes", nullptr));
         pushButton_afficher_livreur->setText(QCoreApplication::translate("MainPage", "Afficher les livreurs", nullptr));
+        pushButton_deconnexion->setText(QCoreApplication::translate("MainPage", "D\303\251connexion", nullptr));
     } // retranslateUi
 
 };
