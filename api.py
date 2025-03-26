@@ -19,9 +19,9 @@ def get_db_connection():
 # Route pour l'authentification
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.json  
-    username = data.get("username")  
-    password = data.get("password")  
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
 
     try:
         conn = get_db_connection()
@@ -68,6 +68,82 @@ def ajouter_livreur():
     conn.close()
 
     return jsonify({"status": "success", "message": "Livreur ajouté avec succès !"})
+
+
+# Routes pour accepter ou refuser une commande
+@app.route('/commande/accepter', methods=['POST'])
+def accepter_commande():
+    data = request.json
+    id_commande = data.get("id_commande")
+
+    if not id_commande:
+        return jsonify({"status": "error", "message": "ID de commande manquant"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Vérifier si la commande existe
+        cursor.execute("SELECT * FROM commandes WHERE id = %s", (id_commande,))
+        commande = cursor.fetchone()
+        if not commande:
+            return jsonify({"status": "error", "message": "Commande introuvable"}), 404
+
+        # Récupérer l'ID du livreur associé à la commande
+        livreur_id = commande.get("livreur_id")
+        if not livreur_id:
+            return jsonify({"status": "error", "message": "Aucun livreur associé à cette commande"}), 400
+
+        # Mettre à jour le statut de la commande et du livreur
+        cursor.execute("UPDATE commandes SET statut = 'en cours' WHERE id = %s", (id_commande,))
+        cursor.execute("UPDATE livreurs SET statut = 'en cours de livraison' WHERE id = %s", (livreur_id,))
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Commande acceptée avec succès"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/commande/refuser', methods=['POST'])
+def refuser_commande():
+    data = request.json
+    id_commande = data.get("id_commande")
+
+    if not id_commande:
+        return jsonify({"status": "error", "message": "ID de commande manquant"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Vérifier si la commande existe
+        cursor.execute("SELECT * FROM commandes WHERE id = %s", (id_commande,))
+        commande = cursor.fetchone()
+        if not commande:
+            return jsonify({"status": "error", "message": "Commande introuvable"}), 404
+
+        # Récupérer l'ID du livreur associé à la commande
+        livreur_id = commande.get("livreur_id")
+        if not livreur_id:
+            return jsonify({"status": "error", "message": "Aucun livreur associé à cette commande"}), 400
+
+        # Mettre à jour le statut de la commande (retour à "en attente") et retirer l'association avec le livreur
+        cursor.execute("UPDATE commandes SET livreur_id = NULL, statut = 'en attente' WHERE id = %s", (id_commande,))
+        cursor.execute("UPDATE livreurs SET statut = 'disponible' WHERE id = %s", (livreur_id,))
+        conn.commit()
+
+        return jsonify({"status": "success", "message": "Commande refusée, en attente d'un autre livreur"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/ajouter_commande', methods=['POST'])
 def ajouter_commande():
@@ -116,11 +192,11 @@ def afficher_commandes():
 
         # Modifier la requête SQL pour inclure "statut"
         cursor.execute("""
-            SELECT id, client_email, taille_casier, poids_colis, commercant_nom, 
-                   commercant_adresse, date_creation, statut 
+            SELECT id, client_email, taille_casier, poids_colis, commercant_nom,
+                   commercant_adresse, date_creation, statut
             FROM commandes
         """)
-        
+
         commandes = cursor.fetchall()
 
         cursor.close()
@@ -235,7 +311,7 @@ def supprimer_livreur():
 
 @app.route('/attribuer_livreur', methods=['POST'])
 def attribuer_livreur():
-    data = request.json  
+    data = request.json
     commande_id = data.get("commande_id")
     livreur_id = data.get("livreur_id")
 
@@ -268,11 +344,11 @@ def attribuer_livreur():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-    
+
 
 @app.route('/livreur/repondre_commande', methods=['POST'])
 def repondre_commande():
-    data = request.json  
+    data = request.json
     commande_id = data.get("commande_id")
     livreur_id = data.get("livreur_id")
     reponse = data.get("reponse")  # "accepter" ou "refuser"
@@ -311,7 +387,7 @@ def repondre_commande():
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
-    
+
 
 # Route pour afficher les commandes attribuées à un livreur
 @app.route('/livreur/commandes_attribuees/<int:livreur_id>', methods=['GET'])
@@ -322,8 +398,8 @@ def commandes_attribuees(livreur_id):
         cursor = conn.cursor()  # Retire l'argument 'dictionary' de ici
 
         cursor.execute("""
-            SELECT id, client_email, taille_casier 
-            FROM commandes 
+            SELECT id, client_email, taille_casier
+            FROM commandes
             WHERE livreur_id = %s
         """, (livreur_id,))
 
