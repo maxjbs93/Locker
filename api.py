@@ -392,15 +392,17 @@ def repondre_commande():
 # Route pour afficher les commandes attribuées à un livreur
 @app.route('/livreur/commandes_attribuees/<int:livreur_id>', methods=['GET'])
 def commandes_attribuees(livreur_id):
-    print(f"Livreur ID reçu : {livreur_id}")  # Log de l'ID pour vérifier
+    print(f"Livreur ID reçu : {livreur_id}")  # Log pour debug
+
     try:
         conn = get_db_connection()
-        cursor = conn.cursor()  # Retire l'argument 'dictionary' de ici
+        cursor = conn.cursor()
 
+        # On ne récupère que les commandes qui ont le statut "attribuée"
         cursor.execute("""
             SELECT id, client_email, taille_casier
             FROM commandes
-            WHERE livreur_id = %s
+            WHERE livreur_id = %s AND statut = 'en attente de confirmation'
         """, (livreur_id,))
 
         commandes = cursor.fetchall()
@@ -413,6 +415,7 @@ def commandes_attribuees(livreur_id):
     finally:
         cursor.close()
         conn.close()
+
 
 
 

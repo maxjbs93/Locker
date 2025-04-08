@@ -120,6 +120,9 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
     }
 
     ui->tableWidget->repaint();  // Forcer le rafraîchissement du tableau
+    // Ajuster automatiquement la largeur des colonnes
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 }
 
 
