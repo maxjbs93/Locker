@@ -1,0 +1,175 @@
+import mysql.connector
+from flask import Flask, request, jsonify
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # Autoriser les requêtes Cross-Origin
+
+# Clé secrète pour JWT
+app.config['JWT_SECRET_KEY'] = 'secret_key'
+
+bcrypt = Bcrypt(app)
+jwt = JWTManager(app)
+
+# Connexion à MySQL
+def get_db_connection():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",  # Change si nécessaire
+        password="",  # Mets ton mot de passe MySQL
+        database="locker"
+    )
+
+### AUTHENTIFICATION ###
+
+# Inscription
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    prenom, nom, email, tel, mot_de_passe = data.get('prenom'), data.get('nom'), data.get('email'), data.get('tel'), data.get('mot_de_passe')
+
+    if not all([prenom, nom, email, tel, mot_de_passe]):
+        return jsonify({"message": "Tous les champs sont requis"}), 400
+
+    hashed_password = bcrypt.generate_password_hash(mot_de_passe).decode('utf-8')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO clients (prenom, nom, email, tel, mot_de_passe) VALUES (%s, %s, %s, %s, %s)",
+                       (prenom, nom, email, tel, hashed_password))
+        conn.commit()
+    except mysql.connector.IntegrityError:
+        return jsonify({"message": "Email déjà utilisé"}), 400
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify({"message": "Inscription réussie"}), 201
+
+# Connexion
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    email, mot_de_passe = data.get('email'), data.get('mot_de_passe')
+
+    if not all([email, mot_de_passe]):
+        return jsonify({"message": "Email et mot de passe requis"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM clients WHERE email = %s", (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if user and bcrypt.check_password_hash(user["mot_de_passe"], mot_de_passe):
+        access_token = create_access_token(identity={"id": user["id"], "email": user["email"]})
+        return jsonify({"message": "Connexion réussie", "token": access_token}), 200
+
+    return jsonify({"message": "Identifiants incorrects"}), 401
+
+### GESTION DES COMMANDES ###
+
+# Créer une commande (stockée dans un locker)
+@app.route('/create_order', methods=['POST'])
+@jwt_required()
+def create_order():
+    user = get_jwt_identity()
+    data = request.json
+    ref_commande, locker_id, code_retrait = data.get('ref_commande'), data.get('locker_id'), data.get('code_retrait')
+
+    if not all([ref_commande, locker_id, code_retrait]):
+        return jsonify({"message": "Tous les champs sont requis"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO commandes (user_id, ref_commande, locker_id, code_retrait, status) VALUES (%s, %s, %s, %s, 'En attente')",
+                       (user['id'], ref_commande, locker_id, code_retrait))
+        conn.commit()
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify({"message": "Commande créée avec succès"}), 201
+
+# Récupérer une commande avec le code de retrait
+@app.route('/get_order', methods=['POST'])
+def get_order():
+    data = request.json
+    code_retrait = data.get('code_retrait')
+
+    if not code_retrait:
+        return jsonify({"message": "Code de retrait requis"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM commandes WHERE code_retrait = %s", (code_retrait,))
+    order = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if order:
+        return jsonify({"commande": order}), 200
+    return jsonify({"message": "Commande introuvable"}), 404
+
+# Déverrouiller un locker
+@app.route('/unlock_locker', methods=['POST'])
+def unlock_locker():
+    data = request.json
+    code_retrait = data.get('code_retrait')
+
+    if not code_retrait:
+        return jsonify({"message": "Code de retrait requis"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM commandes WHERE code_retrait = %s AND status = 'En attente'", (code_retrait,))
+    order = cursor.fetchone()
+
+    if order:
+        cursor.execute("UPDATE commandes SET status = 'Retiré' WHERE id = %s", (order[0],))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Locker déverrouillé, commande retirée"}), 200
+
+    cursor.close()
+    conn.close()
+    return jsonify({"message": "Code invalide ou commande déjà retirée"}), 404
+
+# Lister les commandes d'un utilisateur
+@app.route('/my_orders', methods=['GET'])
+@jwt_required()
+def my_orders():
+    user = get_jwt_identity()
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM commandes WHERE user_id = %s", (user['id'],))
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"commandes": orders}), 200
+
+# Test connexion MySQL
+@app.route('/test_db', methods=['GET'])
+def test_db():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT DATABASE();")
+        db_name = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Connexion réussie", "database": db_name[0]}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Lancer l'API
+if __name__ == '__main__':
+    app.run(debug=True)
