@@ -82,8 +82,8 @@
     <widget class="QPushButton" name="pushButton_ajout_livreur">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>170</y>
+       <x>20</x>
+       <y>140</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -100,8 +100,8 @@
     <widget class="QPushButton" name="pushButton_new_commande">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>270</y>
+       <x>20</x>
+       <y>230</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -118,8 +118,8 @@
     <widget class="QPushButton" name="pushButton_afficher_etat_casier">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>270</y>
+       <x>360</x>
+       <y>230</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -136,8 +136,8 @@
     <widget class="QPushButton" name="pushButton_attribuer_commande_livreur">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>370</y>
+       <x>20</x>
+       <y>320</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -154,8 +154,8 @@
     <widget class="QPushButton" name="pushButton_afficher_commande">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>170</y>
+       <x>360</x>
+       <y>140</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -172,8 +172,8 @@
     <widget class="QPushButton" name="pushButton_afficher_livreur">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>370</y>
+       <x>360</x>
+       <y>320</y>
        <width>241</width>
        <height>61</height>
       </rect>
@@ -190,10 +190,10 @@
     <widget class="QPushButton" name="pushButton_deconnexion">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>440</y>
-       <width>75</width>
-       <height>24</height>
+       <x>180</x>
+       <y>400</y>
+       <width>101</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">

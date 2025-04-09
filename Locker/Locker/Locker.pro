@@ -1,5 +1,18 @@
 QT += core gui network
 
+QT += network  # Assurez-vous d'avoir ce module pour les fonctionnalités réseau
+
+RESOURCES += \
+    resources.qrc \
+    resources.qrc
+
+# Créez un fichier resources.qrc contenant :
+# <RCC>
+#     <qresource prefix="/">
+#         <file>images/locker_logo.png</file>
+#         <file>images/loading.gif</file>
+#     </qresource>
+# </RCC>
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -50,3 +63,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    style.qss

@@ -57,6 +57,7 @@ void MainPage::on_pushButton_afficher_livreur_clicked()
 
 void MainPage::on_pushButton_deconnexion_clicked()
 {
+    this->close();
     MainWindow *mainWindow = new MainWindow();
     mainWindow->show();
 }

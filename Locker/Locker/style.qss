@@ -1,0 +1,75 @@
+/* Style global */
+QWidget {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1,
+        stop:0 #000000, stop:1 #e610f4);
+    color: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+}
+
+/* Style pour les champs de texte */
+QLineEdit {
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    selection-background-color: #3498db;
+    margin: 5px;
+    min-height: 25px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #1abc9c;
+}
+
+/* Style pour les boutons */
+QPushButton {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 #15dbd4,
+        stop: 1 #c85df3
+    );
+    color: white;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 15pt;
+    font-family: "Segoe UI", "Arial", sans-serif;
+    min-width: 200px; /* Augmenter cette valeur */
+    min-height: 40px; /* Hauteur minimum pour s'assurer que tous les boutons ont la même taille */
+    margin: 5px;
+    text-align: center; /* Centrer le texte */
+    word-wrap: break-word; /* Permettre au texte de se répartir sur plusieurs lignes */
+}
+QPushButton:hover {
+    background-color: #2980b9;
+}
+
+QPushButton:pressed {
+    background-color: #1abc9c;
+}
+
+
+QLabel {
+    font-size: 15pt;
+    font-weight: 600;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: "Segoe UI", "Arial", sans-serif;
+    letter-spacing: 0.5px;
+    background: qlineargradient(
+        x1:0, y1:0, x2:1, y2:1,
+        stop:0 #a3d5ff,
+        stop:1 #c715eb
+    );
+}
+
+
+
+/* Style de la fenêtre principale */
+MainWindow {
+    border: 1px solid #3498db;
+    border-radius: 5px;
+}
