@@ -57,9 +57,9 @@
     <widget class="QLabel" name="label_title_2">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>90</x>
        <y>80</y>
-       <width>361</width>
+       <width>411</width>
        <height>51</height>
       </rect>
      </property>
@@ -82,9 +82,9 @@
     <widget class="QPushButton" name="pushButton_ajout_livreur">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>140</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -94,15 +94,15 @@
       </font>
      </property>
      <property name="text">
-      <string>Ajouter un nouveau livreur</string>
+      <string>Ajouter un livreur</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_new_commande">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>230</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -112,15 +112,15 @@
       </font>
      </property>
      <property name="text">
-      <string>Saisir une nouvelle commande </string>
+      <string>Saisir une commande </string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_afficher_etat_casier">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>330</x>
        <y>230</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -136,9 +136,9 @@
     <widget class="QPushButton" name="pushButton_attribuer_commande_livreur">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>320</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -148,15 +148,15 @@
       </font>
      </property>
      <property name="text">
-      <string>Attribuer une commande à un livreur</string>
+      <string>Attribuer une commande</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_afficher_commande">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>330</x>
        <y>140</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -166,15 +166,15 @@
       </font>
      </property>
      <property name="text">
-      <string>Afficher les commandes existantes</string>
+      <string>Afficher les commandes</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_afficher_livreur">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>330</x>
        <y>320</y>
-       <width>241</width>
+       <width>281</width>
        <height>61</height>
       </rect>
      </property>
@@ -190,7 +190,7 @@
     <widget class="QPushButton" name="pushButton_deconnexion">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>200</x>
        <y>400</y>
        <width>101</width>
        <height>41</height>

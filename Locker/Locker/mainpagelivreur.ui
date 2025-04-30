@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>20</y>
+      <y>30</y>
       <width>801</width>
       <height>41</height>
      </rect>
@@ -52,7 +52,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>90</y>
+      <y>140</y>
       <width>391</width>
       <height>81</height>
      </rect>
@@ -70,7 +70,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>200</y>
+      <y>280</y>
       <width>391</width>
       <height>81</height>
      </rect>
@@ -87,8 +87,8 @@
    <widget class="QPushButton" name="pushButton_deconnexion">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>510</y>
+      <x>280</x>
+      <y>490</y>
       <width>91</width>
       <height>24</height>
      </rect>

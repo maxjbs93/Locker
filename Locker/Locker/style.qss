@@ -50,6 +50,19 @@ QPushButton:pressed {
     background-color: #1abc9c;
 }
 
+QPushButton#boutonCertifier {
+    background-color: #f39c12;
+    color: white;
+    border-radius: 2px;
+    padding: 0px 1px;  /* Très petit padding */
+    font-weight: normal;
+    font-size: 7pt;     /* Police encore plus petite */
+    min-height: 12px;   /* Très petite hauteur */
+    max-height: 12px;   /* Limité à 12px de hauteur */
+    max-width: 30px;    /* Largeur très limitée */
+}
+
+
 
 QLabel {
     font-size: 15pt;

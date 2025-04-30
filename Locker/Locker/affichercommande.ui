@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="pushButton_supprimer">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>380</x>
       <y>400</y>
       <width>75</width>
       <height>24</height>

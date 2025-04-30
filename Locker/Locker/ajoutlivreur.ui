@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>781</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -39,9 +39,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>70</y>
       <width>781</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -59,10 +59,10 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>180</y>
-      <width>81</width>
-      <height>30</height>
+      <x>20</x>
+      <y>150</y>
+      <width>301</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -73,14 +73,17 @@
     <property name="text">
      <string>Nom :</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>240</y>
-      <width>81</width>
-      <height>30</height>
+      <x>20</x>
+      <y>220</y>
+      <width>301</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -91,14 +94,17 @@
     <property name="text">
      <string>Prénom : </string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>300</y>
-      <width>81</width>
-      <height>30</height>
+      <x>20</x>
+      <y>290</y>
+      <width>301</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -109,14 +115,17 @@
     <property name="text">
      <string>Adresse :</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>20</x>
       <y>360</y>
-      <width>281</width>
-      <height>30</height>
+      <width>301</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -127,14 +136,17 @@
     <property name="text">
      <string>Nom d'utilisateur :</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>420</y>
-      <width>251</width>
-      <height>30</height>
+      <x>20</x>
+      <y>430</y>
+      <width>301</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -145,14 +157,17 @@
     <property name="text">
      <string>Mot de passe :</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_nom">
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>180</y>
-      <width>311</width>
-      <height>30</height>
+      <y>140</y>
+      <width>421</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -171,9 +186,9 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>240</y>
-      <width>311</width>
-      <height>30</height>
+      <y>210</y>
+      <width>421</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -192,9 +207,9 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>300</y>
-      <width>311</width>
-      <height>30</height>
+      <y>280</y>
+      <width>421</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -213,9 +228,9 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>360</y>
-      <width>311</width>
-      <height>30</height>
+      <y>350</y>
+      <width>421</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -235,8 +250,8 @@
      <rect>
       <x>350</x>
       <y>420</y>
-      <width>311</width>
-      <height>30</height>
+      <width>421</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
@@ -255,7 +270,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>480</y>
+      <y>500</y>
       <width>181</width>
       <height>51</height>
      </rect>
@@ -268,7 +283,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>480</y>
+      <y>500</y>
       <width>181</width>
       <height>51</height>
      </rect>

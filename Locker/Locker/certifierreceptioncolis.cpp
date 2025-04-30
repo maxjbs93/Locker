@@ -102,7 +102,9 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
 
         // Création des boutons Accepter / Refuser
         QPushButton *btnAccepter = new QPushButton("Accepter", this);
+        btnAccepter->setObjectName("boutonCertifier");
         QPushButton *btnRefuser = new QPushButton("Refuser", this);
+        btnRefuser->setObjectName("boutonCertifier");
 
         // Connexion des boutons à des slots pour répondre à la commande
         connect(btnAccepter, &QPushButton::clicked, this, [this, commandeId]() { repondreCommande(commandeId, "accepter"); });
