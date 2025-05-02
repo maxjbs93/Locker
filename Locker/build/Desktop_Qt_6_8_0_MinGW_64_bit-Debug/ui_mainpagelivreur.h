@@ -44,24 +44,24 @@ public:
         label->setGeometry(QRect(340, 50, 49, 16));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(0, 20, 801, 41));
+        label_2->setGeometry(QRect(0, 30, 801, 41));
         QFont font;
         font.setPointSize(25);
         label_2->setFont(font);
         label_2->setAlignment(Qt::AlignmentFlag::AlignCenter);
         pushButton_certifierreceptioncolis = new QPushButton(centralwidget);
         pushButton_certifierreceptioncolis->setObjectName("pushButton_certifierreceptioncolis");
-        pushButton_certifierreceptioncolis->setGeometry(QRect(200, 90, 391, 81));
+        pushButton_certifierreceptioncolis->setGeometry(QRect(200, 140, 391, 81));
         QFont font1;
         font1.setPointSize(14);
         pushButton_certifierreceptioncolis->setFont(font1);
         pushButton_certifierlivraisoncommande = new QPushButton(centralwidget);
         pushButton_certifierlivraisoncommande->setObjectName("pushButton_certifierlivraisoncommande");
-        pushButton_certifierlivraisoncommande->setGeometry(QRect(200, 200, 391, 81));
+        pushButton_certifierlivraisoncommande->setGeometry(QRect(200, 280, 391, 81));
         pushButton_certifierlivraisoncommande->setFont(font1);
         pushButton_deconnexion = new QPushButton(centralwidget);
         pushButton_deconnexion->setObjectName("pushButton_deconnexion");
-        pushButton_deconnexion->setGeometry(QRect(360, 510, 91, 24));
+        pushButton_deconnexion->setGeometry(QRect(280, 490, 91, 24));
         mainpagelivreur->setCentralWidget(centralwidget);
         menubar = new QMenuBar(mainpagelivreur);
         menubar->setObjectName("menubar");
@@ -80,7 +80,7 @@ public:
     {
         mainpagelivreur->setWindowTitle(QCoreApplication::translate("mainpagelivreur", "MainWindow", nullptr));
         label->setText(QString());
-        label_2->setText(QCoreApplication::translate("mainpagelivreur", "Que souhaitez- vous faire ?", nullptr));
+        label_2->setText(QCoreApplication::translate("mainpagelivreur", "Que souhaitez - vous faire ?", nullptr));
         pushButton_certifierreceptioncolis->setText(QCoreApplication::translate("mainpagelivreur", "Certifier la r\303\251ception d'un colis", nullptr));
         pushButton_certifierlivraisoncommande->setText(QCoreApplication::translate("mainpagelivreur", "Certifier la livraison d'une commande", nullptr));
         pushButton_deconnexion->setText(QCoreApplication::translate("mainpagelivreur", "Se d\303\251connecter", nullptr));

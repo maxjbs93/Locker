@@ -9,6 +9,7 @@ release/main.o
 release/mainpage.o
 release/mainpagelivreur.o
 release/mainwindow.o
+release/qrc_resources.o
 release/moc_affichercommande.o
 release/moc_afficheretatcasier.o
 release/moc_afficherlivreur.o

@@ -9,6 +9,7 @@ debug/main.o
 debug/mainpage.o
 debug/mainpagelivreur.o
 debug/mainwindow.o
+debug/qrc_resources.o
 debug/moc_affichercommande.o
 debug/moc_afficheretatcasier.o
 debug/moc_afficherlivreur.o

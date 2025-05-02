@@ -82,6 +82,9 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
 
     ui->tableWidget->setRowCount(commandes.size());
     ui->tableWidget->setColumnCount(4);  // ID, Client, Taille Casier, Actions
+    QStringList headers = { "ID", "Client", "Taille Casier", "Actions" };
+    ui->tableWidget->setHorizontalHeaderLabels(headers);
+
 
     for (int i = 0; i < commandes.size(); ++i) {
         QJsonObject commande = commandes[i].toObject();
@@ -108,11 +111,16 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
             repondreCommande(commandeId, "refuser");
         });
 
+        // Conteneur de boutons dans un layout horizontal
         QWidget *buttonContainer = new QWidget();
         QHBoxLayout *layout = new QHBoxLayout(buttonContainer);
         layout->addWidget(btnAccepter);
         layout->addWidget(btnRefuser);
         layout->setContentsMargins(0, 0, 0, 0);
+        layout->setSpacing(5);
+        layout->setSizeConstraint(QLayout::SetMinimumSize);
+        buttonContainer->setMinimumWidth(150);  // Ajuste selon tes préférences
+
 
         ui->tableWidget->setCellWidget(i, 3, buttonContainer);
     }
@@ -126,6 +134,8 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     ui->tableWidget->repaint();
+    ui->tableWidget->resizeRowsToContents();
+
 }
 
 

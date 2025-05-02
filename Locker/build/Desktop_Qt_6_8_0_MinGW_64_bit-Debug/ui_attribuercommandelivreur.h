@@ -70,7 +70,7 @@ public:
         label_3->setAlignment(Qt::AlignmentFlag::AlignCenter);
         pushButton_attribuer = new QPushButton(centralwidget);
         pushButton_attribuer->setObjectName("pushButton_attribuer");
-        pushButton_attribuer->setGeometry(QRect(310, 450, 181, 41));
+        pushButton_attribuer->setGeometry(QRect(280, 440, 181, 41));
         attribuercommandelivreur->setCentralWidget(centralwidget);
         menubar = new QMenuBar(attribuercommandelivreur);
         menubar->setObjectName("menubar");

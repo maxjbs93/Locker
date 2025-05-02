@@ -32,16 +32,16 @@ public:
     {
         if (certifierreceptioncolis->objectName().isEmpty())
             certifierreceptioncolis->setObjectName("certifierreceptioncolis");
-        certifierreceptioncolis->resize(800, 600);
+        certifierreceptioncolis->resize(1000, 800);
         centralwidget = new QWidget(certifierreceptioncolis);
         centralwidget->setObjectName("centralwidget");
         tableWidget = new QTableWidget(centralwidget);
         tableWidget->setObjectName("tableWidget");
-        tableWidget->setGeometry(QRect(0, 100, 800, 300));
+        tableWidget->setGeometry(QRect(0, 100, 1000, 500));
         certifierreceptioncolis->setCentralWidget(centralwidget);
         menubar = new QMenuBar(certifierreceptioncolis);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 1000, 22));
         certifierreceptioncolis->setMenuBar(menubar);
         statusbar = new QStatusBar(certifierreceptioncolis);
         statusbar->setObjectName("statusbar");

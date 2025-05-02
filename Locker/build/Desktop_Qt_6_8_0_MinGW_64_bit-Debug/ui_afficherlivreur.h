@@ -42,7 +42,7 @@ public:
         tableWidget->setGeometry(QRect(0, 160, 801, 221));
         pushButton_supprimer = new QPushButton(centralwidget);
         pushButton_supprimer->setObjectName("pushButton_supprimer");
-        pushButton_supprimer->setGeometry(QRect(340, 400, 75, 24));
+        pushButton_supprimer->setGeometry(QRect(290, 400, 75, 24));
         afficherlivreur->setCentralWidget(centralwidget);
         menubar = new QMenuBar(afficherlivreur);
         menubar->setObjectName("menubar");

@@ -39,7 +39,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         pushButton_supprimer = new QPushButton(centralwidget);
         pushButton_supprimer->setObjectName("pushButton_supprimer");
-        pushButton_supprimer->setGeometry(QRect(460, 400, 75, 24));
+        pushButton_supprimer->setGeometry(QRect(380, 400, 75, 24));
         tableWidget_commandes = new QTableWidget(centralwidget);
         tableWidget_commandes->setObjectName("tableWidget_commandes");
         tableWidget_commandes->setGeometry(QRect(0, 180, 1001, 200));
