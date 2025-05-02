@@ -73,7 +73,6 @@ void certifierreceptioncolis::loadAssignedOrders()
 }
 
 
-// Met à jour le tableau avec les commandes attribuées
 void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
 {
     if (commandes.isEmpty()) {
@@ -81,10 +80,9 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
         return;
     }
 
-    ui->tableWidget->setRowCount(commandes.size());  // Ajuste le nombre de lignes
-    ui->tableWidget->setColumnCount(4);  // Définit le nombre de colonnes (ID, Client, Taille Casier, Actions)
+    ui->tableWidget->setRowCount(commandes.size());
+    ui->tableWidget->setColumnCount(4);  // ID, Client, Taille Casier, Actions
 
-    // Parcours les commandes et remplit le tableau
     for (int i = 0; i < commandes.size(); ++i) {
         QJsonObject commande = commandes[i].toObject();
 
@@ -92,40 +90,45 @@ void certifierreceptioncolis::updateTable(const QJsonArray &commandes)
         QString clientEmail = commande["client_email"].toString();
         QString tailleCasier = commande["taille_casier"].toString();
 
-        // Débogage pour vérifier que les données sont extraites correctement
         qDebug() << "Commande " << commandeId << " - Client: " << clientEmail << " - Taille Casier: " << tailleCasier;
 
-        // Remplissage des cellules du tableau
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(commandeId)));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(clientEmail));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(tailleCasier));
 
-        // Création des boutons Accepter / Refuser
         QPushButton *btnAccepter = new QPushButton("Accepter", this);
         btnAccepter->setObjectName("boutonCertifier");
         QPushButton *btnRefuser = new QPushButton("Refuser", this);
         btnRefuser->setObjectName("boutonCertifier");
 
-        // Connexion des boutons à des slots pour répondre à la commande
-        connect(btnAccepter, &QPushButton::clicked, this, [this, commandeId]() { repondreCommande(commandeId, "accepter"); });
-        connect(btnRefuser, &QPushButton::clicked, this, [this, commandeId]() { repondreCommande(commandeId, "refuser"); });
+        connect(btnAccepter, &QPushButton::clicked, this, [this, commandeId]() {
+            repondreCommande(commandeId, "accepter");
+        });
+        connect(btnRefuser, &QPushButton::clicked, this, [this, commandeId]() {
+            repondreCommande(commandeId, "refuser");
+        });
 
-        // Conteneur de boutons dans un layout horizontal
         QWidget *buttonContainer = new QWidget();
         QHBoxLayout *layout = new QHBoxLayout(buttonContainer);
         layout->addWidget(btnAccepter);
         layout->addWidget(btnRefuser);
         layout->setContentsMargins(0, 0, 0, 0);
 
-        // Affectation du conteneur de boutons dans la cellule de la colonne "Actions"
         ui->tableWidget->setCellWidget(i, 3, buttonContainer);
     }
 
-    ui->tableWidget->repaint();  // Forcer le rafraîchissement du tableau
-    // Ajuster automatiquement la largeur des colonnes
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // Ajustement automatique des colonnes 0 à 2 au contenu
+    for (int col = 0; col < 3; ++col) {
+        ui->tableWidget->horizontalHeader()->setSectionResizeMode(col, QHeaderView::ResizeToContents);
+    }
 
+    // La colonne 3 (Actions) s'étire pour remplir l'espace restant
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+
+    ui->tableWidget->repaint();
 }
+
+
 
 
 // Méthode pour répondre à une commande (Accepter ou Refuser)

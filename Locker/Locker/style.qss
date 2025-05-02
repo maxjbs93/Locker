@@ -7,7 +7,7 @@ QWidget {
     font-size: 11pt;
 }
 
-/* Style pour les champs de texte */
+/* Champs de texte */
 QLineEdit {
     border: 2px solid #3498db;
     border-radius: 10px;
@@ -23,7 +23,7 @@ QLineEdit:focus {
     border: 2px solid #1abc9c;
 }
 
-/* Style pour les boutons */
+/* Style général des QPushButton */
 QPushButton {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
@@ -36,12 +36,13 @@ QPushButton {
     font-weight: 600;
     font-size: 15pt;
     font-family: "Segoe UI", "Arial", sans-serif;
-    min-width: 200px; /* Augmenter cette valeur */
-    min-height: 40px; /* Hauteur minimum pour s'assurer que tous les boutons ont la même taille */
+    min-width: 200px;
+    min-height: 40px;
     margin: 5px;
-    text-align: center; /* Centrer le texte */
-    word-wrap: break-word; /* Permettre au texte de se répartir sur plusieurs lignes */
+    text-align: center;
+    word-wrap: break-word;
 }
+
 QPushButton:hover {
     background-color: #2980b9;
 }
@@ -50,20 +51,29 @@ QPushButton:pressed {
     background-color: #1abc9c;
 }
 
-QPushButton#boutonCertifier {
-    background-color: #f39c12;
-    color: white;
-    border-radius: 2px;
-    padding: 0px 1px;  /* Très petit padding */
-    font-weight: normal;
-    font-size: 7pt;     /* Police encore plus petite */
-    min-height: 12px;   /* Très petite hauteur */
-    max-height: 12px;   /* Limité à 12px de hauteur */
-    max-width: 30px;    /* Largeur très limitée */
+/* Ultra petits boutons Accepter / Refuser */
+QPushButton#accepter, QPushButton#refuser {
+    font-size: 6pt;
+    padding: 0px 2px;
+    border-radius: 3px;
+    min-width: 30px;
+    max-width: 35px;
+    min-height: 14px;
+    max-height: 16px;
+    margin: 0px;
 }
 
+QPushButton#accepter {
+    background-color: #2ecc71;
+    color: white;
+}
 
+QPushButton#refuser {
+    background-color: #e74c3c;
+    color: white;
+}
 
+/* QLabel */
 QLabel {
     font-size: 15pt;
     font-weight: 600;
@@ -79,9 +89,7 @@ QLabel {
     );
 }
 
-
-
-/* Style de la fenêtre principale */
+/* MainWindow */
 MainWindow {
     border: 1px solid #3498db;
     border-radius: 5px;

@@ -42,7 +42,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Que souhaitez- vous faire ?</string>
+     <string>Que souhaitez - vous faire ?</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignCenter</set>
