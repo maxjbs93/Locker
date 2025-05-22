@@ -66,24 +66,6 @@
      <string>Certifier la réception d'un colis</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_certifierlivraisoncommande">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>280</y>
-      <width>391</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Certifier la livraison d'une commande</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_deconnexion">
     <property name="geometry">
      <rect>

@@ -15,9 +15,15 @@ afficherlivreur::afficherlivreur(QWidget *parent)
     // Configuration du tableau
     ui->tableWidget->setColumnCount(6);
     ui->tableWidget->setHorizontalHeaderLabels({"ID", "Nom", "Prénom", "Adresse", "Username", "Statut"});
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    for (int i = 0; i < ui->tableWidget->columnCount(); ++i) {
+        if (i >= 3)  // Colonnes Adresse, Username, Statut
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+        else
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+    }
 
     afficherLivreurs();  // Charger la liste des livreurs au démarrage
 
