@@ -1,3 +1,4 @@
+/* Base QWidget */
 QWidget {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1,
         stop:0 #000000, stop:1 #e610f4);
@@ -6,6 +7,7 @@ QWidget {
     font-size: 11pt;
 }
 
+/* QLineEdit */
 QLineEdit {
     border: 2px solid #3498db;
     border-radius: 10px;
@@ -14,13 +16,15 @@ QLineEdit {
     color: #2c3e50;
     selection-background-color: #3498db;
     margin: 5px;
-    min-height: 25px;
+    min-height: 30px;
 }
 
 QLineEdit:focus {
     border: 2px solid #1abc9c;
+    /* Pour un effet d'ombre, tu peux gérer ça en C++ */
 }
 
+/* QPushButton général */
 QPushButton {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
@@ -38,6 +42,8 @@ QPushButton {
     margin: 5px;
     text-align: center;
     word-wrap: break-word;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 QPushButton:hover {
@@ -48,7 +54,7 @@ QPushButton:pressed {
     background-color: #1abc9c;
 }
 
-/* Ultra petits boutons Accepter / Refuser */
+/* Boutons Accepter / Refuser (petits) */
 QPushButton#accepter, QPushButton#refuser {
     font-size: 6pt;
     padding: 0px 2px;
@@ -70,11 +76,11 @@ QPushButton#refuser {
     color: white;
 }
 
-/* QLabel */
+/* QLabel (ajusté couleur et fond pour meilleure harmonie) */
 QLabel {
     font-size: 15pt;
     font-weight: 600;
-    color: black;
+    color: white;
     padding: 8px 12px;
     border-radius: 8px;
     font-family: "Segoe UI", "Arial", sans-serif;
@@ -82,12 +88,45 @@ QLabel {
     background: qlineargradient(
         x1:0, y1:0, x2:1, y2:1,
         stop:0 #a3d5ff,
-        stop:1 #c715eb
+        stop:1 #6a00f4
     );
 }
 
-/* MainWindow */
-MainWindow {
+/* QMainWindow */
+QMainWindow {
     border: 1px solid #3498db;
     border-radius: 5px;
+}
+
+/* QHeaderView sections */
+QHeaderView::section {
+    background-color: qlineargradient(
+        spread:pad, x1:0, y1:0, x2:1, y2:1,
+        stop:0 #000000, stop:1 #e610f4
+    );
+    color: white;
+    padding: 6px;
+    font-weight: bold;
+    border: 1px solid #b84aff;
+    text-align: center;
+}
+
+/* Scrollbars verticaux */
+QScrollBar:vertical {
+    border: none;
+    background: #2c2c2c;
+    width: 12px;
+    margin: 0px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #c85df3, stop:1 #15dbd4);
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+    background: none;
 }

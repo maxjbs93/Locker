@@ -6,6 +6,11 @@ MainPage::MainPage(QWidget *parent)
     , ui(new Ui::MainPage)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Menu principal côté commerçant");
+
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 }
 
 MainPage::~MainPage()

@@ -8,13 +8,16 @@ mainpagelivreur::mainpagelivreur(int livreurId, QWidget *parent)
     , m_livreurId(livreurId)  // Initialiser l'ID du livreur
 {
     ui->setupUi(this);
-
+    setWindowTitle("Locker - Menu principal côté livreur");
     if (livreurId == 0) {
         QMessageBox::warning(this, "Erreur", "ID du livreur non défini.");
     } else {
         // Ici, tu peux charger les informations du livreur et les commandes attribuées
         loadAssignedOrders();  // Appelle une méthode pour charger les commandes
     }
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 }
 
 mainpagelivreur::~mainpagelivreur()

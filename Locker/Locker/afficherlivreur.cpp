@@ -11,6 +11,10 @@ afficherlivreur::afficherlivreur(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::afficherlivreur)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Affichage des différents livreurs");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 
     // Configuration du tableau
     ui->tableWidget->setColumnCount(6);

@@ -12,6 +12,10 @@ ajoutcommande::ajoutcommande(QWidget *parent)
     , ui(new Ui::ajoutcommande)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Saisie d'une commande");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 
     // Ajouter les options au ComboBox
     ui->comboBox_taille->addItem("choisissez une option");

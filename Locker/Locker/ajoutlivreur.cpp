@@ -12,6 +12,10 @@ ajoutlivreur::ajoutlivreur(QWidget *parent)
     , ui(new Ui::ajoutlivreur)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Ajout d'un livreur");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 }
 
 ajoutlivreur::~ajoutlivreur()

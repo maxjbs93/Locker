@@ -12,20 +12,25 @@
 #include <QTableWidgetItem>
 #include <QDebug>
 
-// Définition de la méthode pour définir l'ID du livreur
+
+
 void certifierreceptioncolis::setLivreurId(int id)
 {
-    idLivreur = id;  // Stockage de l'ID du livreur
-    qDebug() << "ID du livreur défini : " << idLivreur;  // Débogage pour vérifier l'ID
-    loadAssignedOrders();  // Charger les commandes dès que l'ID est défini
+    idLivreur = id;
+    qDebug() << "ID du livreur défini : " << idLivreur;
+    loadAssignedOrders();
 }
 
 certifierreceptioncolis::certifierreceptioncolis(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::certifierreceptioncolis)
-    , networkManager(new QNetworkAccessManager(this))  // Initialisation du gestionnaire réseau
+    , networkManager(new QNetworkAccessManager(this))
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Certification de la réception d'un colis");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 }
 
 certifierreceptioncolis::~certifierreceptioncolis()

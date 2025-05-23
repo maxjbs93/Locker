@@ -16,6 +16,10 @@ affichercommande::affichercommande(QWidget *parent)
     , ui(new Ui::affichercommande)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Affichage des commandes existantes");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 
     // Charger les commandes à l'initialisation
     chargerCommandes();

@@ -14,6 +14,9 @@ AttribuerCommandeLivreur::AttribuerCommandeLivreur(QWidget *parent) :
     ui(new Ui::attribuercommandelivreur)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Attribution d'une commande à un livreur");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
 
     // Charger les commandes et livreurs dès l'initialisation
     chargerCommandesEtLivreurs();

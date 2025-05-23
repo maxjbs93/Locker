@@ -6,16 +6,18 @@
 #include <QJsonDocument>
 #include <QMessageBox>
 #include <QDebug>
-
-#include "mainpage.h"  // Fichier pour l'interface commerçant
-#include "mainpagelivreur.h"    // Fichier pour l'interface livreur
-#include "certifierreceptioncolis.h"  // Importation de la classe certifierreceptioncolis
+#include "mainpage.h"
+#include "mainpagelivreur.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker");
+
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
 }
 
 MainWindow::~MainWindow()

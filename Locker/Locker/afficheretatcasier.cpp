@@ -14,6 +14,10 @@ afficheretatcasier::afficheretatcasier(QWidget *parent) :
     ui(new Ui::afficheretatcasier)
 {
     ui->setupUi(this);
+    setWindowTitle("Locker - Affichage de l'état des casiers");
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setFixedSize(size());
+
 
     // Ajouter les colonnes au tableWidget
     ui->tableWidget->setColumnCount(6);
