@@ -1,7 +1,10 @@
 import mysql.connector
 from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import (
+    JWTManager, create_access_token,
+    jwt_required, get_jwt_identity
+)
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -13,33 +16,37 @@ app.config['JWT_SECRET_KEY'] = 'secret_key'
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
-# Connexion à MySQL
+# ————— Connexion à MySQL —————
 def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
-        user="root",  # Change si nécessaire
-        password="",  # Mets ton mot de passe MySQL
-        database="locker"
+        user="root",        # à adapter si besoin
+        password="",        # ton mot de passe MySQL
+        database="locker"   # nom de ta BDD
     )
 
-### AUTHENTIFICATION ###
-
-# Inscription
+# ————— INSCRIPTION CLIENT —————
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
-    prenom, nom, email, tel, mot_de_passe = data.get('prenom'), data.get('nom'), data.get('email'), data.get('tel'), data.get('mot_de_passe')
+    prenom = data.get('prenom')
+    nom = data.get('nom')
+    email = data.get('email')
+    tel = data.get('tel')
+    mot_de_passe = data.get('mot_de_passe')
 
     if not all([prenom, nom, email, tel, mot_de_passe]):
         return jsonify({"message": "Tous les champs sont requis"}), 400
 
     hashed_password = bcrypt.generate_password_hash(mot_de_passe).decode('utf-8')
-
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO clients (prenom, nom, email, tel, mot_de_passe) VALUES (%s, %s, %s, %s, %s)",
-                       (prenom, nom, email, tel, hashed_password))
+        cursor.execute(
+            "INSERT INTO clients (prenom, nom, email, tel, mot_de_passe) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (prenom, nom, email, tel, hashed_password)
+        )
         conn.commit()
     except mysql.connector.IntegrityError:
         return jsonify({"message": "Email déjà utilisé"}), 400
@@ -49,11 +56,12 @@ def register():
 
     return jsonify({"message": "Inscription réussie"}), 201
 
-# Connexion
+# ————— CONNEXION CLIENT —————
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    email, mot_de_passe = data.get('email'), data.get('mot_de_passe')
+    email = data.get('email')
+    mot_de_passe = data.get('mot_de_passe')
 
     if not all([email, mot_de_passe]):
         return jsonify({"message": "Email et mot de passe requis"}), 400
@@ -66,42 +74,141 @@ def login():
     conn.close()
 
     if user and bcrypt.check_password_hash(user["mot_de_passe"], mot_de_passe):
-        access_token = create_access_token(identity={"id": user["id"], "email": user["email"]})
-        return jsonify({"message": "Connexion réussie", "token": access_token}), 200
+        token = create_access_token(identity={"id": user["id"], "role": "client"})
+        return jsonify({"message": "Connexion réussie", "token": token}), 200
 
     return jsonify({"message": "Identifiants incorrects"}), 401
 
-### GESTION DES COMMANDES ###
+# ————— INSCRIPTION LIVREUR —————
+@app.route('/register/livreur', methods=['POST'])
+def register_livreur():
+    data = request.json
+    prenom = data.get('prenom')
+    nom = data.get('nom')
+    email = data.get('email')
+    tel = data.get('tel')
+    mot_de_passe = data.get('mot_de_passe')
 
-# Créer une commande (stockée dans un locker)
+    if not all([prenom, nom, email, tel, mot_de_passe]):
+        return jsonify({"message": "Tous les champs sont requis"}), 400
+
+    hashed = bcrypt.generate_password_hash(mot_de_passe).decode('utf-8')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO livreurs (prenom, nom, email, tel, mot_de_passe) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (prenom, nom, email, tel, hashed)
+        )
+        conn.commit()
+    except mysql.connector.IntegrityError:
+        return jsonify({"message": "Email déjà utilisé"}), 400
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify({"message": "Livreur enregistré"}), 201
+
+# ————— CONNEXION LIVREUR —————
+@app.route('/login/livreur', methods=['POST'])
+def login_livreur():
+    data = request.json
+    email = data.get('email')
+    mot_de_passe = data.get('mot_de_passe')
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM livreurs WHERE email = %s", (email,))
+    livreur = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if livreur and bcrypt.check_password_hash(livreur['mot_de_passe'], mot_de_passe):
+        token = create_access_token(identity={"id": livreur["id"], "role": "livreur"})
+        return jsonify({"message": "Connexion livreur réussie", "token": token}), 200
+
+    return jsonify({"message": "Identifiants incorrects"}), 401
+
+# ————— INSCRIPTION COMMERCANT —————
+@app.route('/register/commercant', methods=['POST'])
+def register_commercant():
+    data = request.json
+    nom = data.get('nom')
+    email = data.get('email')
+    mot_de_passe = data.get('mot_de_passe')
+
+    if not all([nom, email, mot_de_passe]):
+        return jsonify({"message": "Tous les champs sont requis"}), 400
+
+    hashed = bcrypt.generate_password_hash(mot_de_passe).decode('utf-8')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO commercants (nom, email, mot_de_passe) "
+            "VALUES (%s, %s, %s)",
+            (nom, email, hashed)
+        )
+        conn.commit()
+    except mysql.connector.IntegrityError:
+        return jsonify({"message": "Email déjà utilisé"}), 400
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify({"message": "Commerçant enregistré"}), 201
+
+# ————— CONNEXION COMMERCANT —————
+@app.route('/login/commercant', methods=['POST'])
+def login_commercant():
+    data = request.json
+    email = data.get('email')
+    mot_de_passe = data.get('mot_de_passe')
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM commercants WHERE email = %s", (email,))
+    commercant = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if commercant and bcrypt.check_password_hash(commercant['mot_de_passe'], mot_de_passe):
+        token = create_access_token(identity={"id": commercant["id"], "role": "commercant"})
+        return jsonify({"message": "Connexion commerçant réussie", "token": token}), 200
+
+    return jsonify({"message": "Identifiants incorrects"}), 401
+
+# ————— GESTION DES COMMANDES CLIENT —————
 @app.route('/create_order', methods=['POST'])
 @jwt_required()
 def create_order():
     user = get_jwt_identity()
     data = request.json
-    ref_commande, locker_id, code_retrait = data.get('ref_commande'), data.get('locker_id'), data.get('code_retrait')
+    ref_commande = data.get('ref_commande')
+    locker_id = data.get('locker_id')
+    code_retrait = data.get('code_retrait')
 
     if not all([ref_commande, locker_id, code_retrait]):
         return jsonify({"message": "Tous les champs sont requis"}), 400
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    try:
-        cursor.execute("INSERT INTO commandes (user_id, ref_commande, locker_id, code_retrait, status) VALUES (%s, %s, %s, %s, 'En attente')",
-                       (user['id'], ref_commande, locker_id, code_retrait))
-        conn.commit()
-    finally:
-        cursor.close()
-        conn.close()
+    cursor.execute(
+        "INSERT INTO commandes (user_id, ref_commande, locker_id, code_retrait, status) "
+        "VALUES (%s, %s, %s, %s, 'En attente')",
+        (user['id'], ref_commande, locker_id, code_retrait)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
 
     return jsonify({"message": "Commande créée avec succès"}), 201
 
-# Récupérer une commande avec le code de retrait
 @app.route('/get_order', methods=['POST'])
 def get_order():
     data = request.json
     code_retrait = data.get('code_retrait')
-
     if not code_retrait:
         return jsonify({"message": "Code de retrait requis"}), 400
 
@@ -116,22 +223,25 @@ def get_order():
         return jsonify({"commande": order}), 200
     return jsonify({"message": "Commande introuvable"}), 404
 
-# Déverrouiller un locker
 @app.route('/unlock_locker', methods=['POST'])
 def unlock_locker():
     data = request.json
     code_retrait = data.get('code_retrait')
-
     if not code_retrait:
         return jsonify({"message": "Code de retrait requis"}), 400
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM commandes WHERE code_retrait = %s AND status = 'En attente'", (code_retrait,))
+    cursor.execute(
+        "SELECT id FROM commandes WHERE code_retrait = %s AND status = 'En attente'",
+        (code_retrait,)
+    )
     order = cursor.fetchone()
-
     if order:
-        cursor.execute("UPDATE commandes SET status = 'Retiré' WHERE id = %s", (order[0],))
+        cursor.execute(
+            "UPDATE commandes SET status = 'Retiré' WHERE id = %s",
+            (order[0],)
+        )
         conn.commit()
         cursor.close()
         conn.close()
@@ -141,22 +251,43 @@ def unlock_locker():
     conn.close()
     return jsonify({"message": "Code invalide ou commande déjà retirée"}), 404
 
-# Lister les commandes d'un utilisateur
 @app.route('/my_orders', methods=['GET'])
 @jwt_required()
 def my_orders():
     user = get_jwt_identity()
-
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM commandes WHERE user_id = %s", (user['id'],))
     orders = cursor.fetchall()
     cursor.close()
     conn.close()
-
     return jsonify({"commandes": orders}), 200
 
-# Test connexion MySQL
+# ————— NOUVELLES ROUTES —————
+
+# Lister tous les casiers disponibles
+@app.route('/casiers/disponibles', methods=['GET'])
+def casiers_disponibles():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM casiers WHERE statut = 1")
+    casiers = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify({"casiers_libres": casiers}), 200
+
+# Lister toutes les commandes (admin/debug)
+@app.route('/commandes', methods=['GET'])
+def all_orders():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM commandes")
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify({"commandes": orders}), 200
+
+# Route de test de connexion à la BDD
 @app.route('/test_db', methods=['GET'])
 def test_db():
     try:
@@ -170,6 +301,92 @@ def test_db():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Lancer l'API
+# ————— Mettre à jour le mot de passe du livreur —————
+@app.route('/livreur/update_password', methods=['POST'])
+def update_password_livreur():
+    data = request.json
+    livreur_id = data.get('id')
+    nouveau_mdp = data.get('mot_de_passe')
+
+    if not (livreur_id and nouveau_mdp):
+        return jsonify({"message": "Champs manquants"}), 400
+
+    hashed = bcrypt.generate_password_hash(nouveau_mdp).decode('utf-8')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE livreurs SET mot_de_passe = %s, temporaire = 0 WHERE id = %s", (hashed, livreur_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({"message": "Mot de passe mis à jour"}), 200
+
+
+# ————— Commandes à récupérer chez les commerçants —————
+@app.route('/commandes_a_recuperer', methods=['GET'])
+def commandes_a_recuperer():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT commandes.id, commandes.ref_commande, c.nom AS nom_commercant, c.adresse
+        FROM commandes
+        JOIN commercants c ON commandes.commercant_id = c.id
+        WHERE commandes.status = 'Chez commerçant'
+    """)
+    commandes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify({"commandes": commandes})
+
+
+# ————— Valider récupération chez commerçant —————
+@app.route('/commande/valider_retrait', methods=['POST'])
+def valider_retrait_commercant():
+    data = request.json
+    commande_id = data.get('id_commande')
+    if not commande_id:
+        return jsonify({"message": "ID commande requis"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE commandes SET status = 'En cours de livraison' WHERE id = %s", (commande_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({"message": "Retrait chez commerçant validé"}), 200
+
+
+# ————— Livrer une commande dans un casier —————
+@app.route('/commande/livrer', methods=['POST'])
+def livrer_commande():
+    data = request.json
+    commande_id = data.get('id_commande')
+    taille = data.get('taille')
+
+    if not (commande_id and taille):
+        return jsonify({"message": "Champs manquants"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Trouver un casier vide adapté
+    cursor.execute("SELECT * FROM casiers WHERE taille = %s AND statut = 1 LIMIT 1", (taille,))
+    casier = cursor.fetchone()
+
+    if not casier:
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Aucun casier disponible pour cette taille"}), 400
+
+    # Marquer le casier comme occupé et mettre à jour la commande
+    cursor.execute("UPDATE casiers SET statut = 0 WHERE id = %s", (casier['id'],))
+    cursor.execute("UPDATE commandes SET status = 'Déposée', locker_id = %s WHERE id = %s", (casier['id'], commande_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": f"Commande livrée dans le casier {casier['id']}"}), 200
+
+
+# ————— Lancement de l’API —————
 if __name__ == '__main__':
     app.run(debug=True)
